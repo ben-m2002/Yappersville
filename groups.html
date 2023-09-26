@@ -1,10 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name = "viewport"  content = "width=device-width, initial-scale=1.0" />
+    <title>Yappersville</title>
 </head>
 <body>
+    <header>
+        <h1>Yappersville</h1>
+        <nav>
+            <menu>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="groups.html">Groups</a></li>
+                <li><a href="groups.html">Chat</a></li>
+                <li><a href="groups.html">Direct Message</a></li>
+            </menu>
+        </nav>
+
+        <hr />
+
+    </header>
+
+    <main>
+        <h4>Pick a group</h4>
+        <div>
+            <button>Cool Kids Club</button>
+            <button>CS 4 Life Group</button>
+        </div>
+        <div>
+            <button>Video Game Slayers</button>
+            <button>Water Balloons 4 Life</button>
+        </div>
+
+        <hr />
+
+         <form method="get" action="groups.html">
+            <label for="join-group">Join A Group!</label>
+            <input type="text" id="join-group" placeholder="Enter a group ID" />
+            <button type="submit">Go</button>
+
+            <label for="create-group">Create a Group!</label>
+            <input type="text" id="create-group" placeholder="Enter a group name" />
+            <button type="submit">Go</button>
+        </form>
+
+    </main>
+
+    <footer>
+        <hr />
+        <span class="text-reset">Author Name(s)</span>
+        <br />
+        <a href="https://github.com/ben-m2002/startup"> GitHub</a>
+    </footer>
 
 </body>
 </html>
