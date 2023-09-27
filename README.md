@@ -5,10 +5,10 @@ Do you and your buddies want a place to talk after school, and don't know where 
 
 ## Design
 
-![Design Image 1](./YLogin-1.jpg)
-![Design Image 2](./YGroup-2.jpg)
-![Design Image 3](./YChatPage-3.jpg)
-![Design Image 4](./YPrivate-4.jpg)
+![Design Image 1](images/YLogin-1.jpg)
+![Design Image 2](images/YGroup-2.jpg)
+![Design Image 3](images/YChatPage-3.jpg)
+![Design Image 4](images/YPrivate-4.jpg)
 
 ## Key features
 
