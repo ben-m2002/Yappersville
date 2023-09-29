@@ -49,6 +49,16 @@ Do you and your buddies want a place to talk after school, and don't know where 
 #### React
 - Application ported to use the React web framework.
 
+## HTML Deliverable
 
+### For this deliverable I built out the structure of my application using HTML
+- HTML pages : 4 HTML Pages for main page, groups, chat, and private message
+- Links : There are proper links connected pages together
+- Text : There is text to join groups, and text that show how the chat works
+- 3rd Party : There is a joke button, that will use a 3rd party service to tell a joke
+- Images : There are images associated with each group
+- Login : Input and password box to login
+- Database : There is a database to hold login info and holds chats according to groups, and also private messages
+- Websocket : There is real time chatting in the groups and private and messaging
 
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
