@@ -4,35 +4,69 @@
     <meta charset="UTF-8" />
     <meta name = "viewport"  content = "width=device-width, initial-scale=1.0" />
     <title>Yappersville</title>
-</head>
-<body>
-    <header>
-        <h1>Yappersville</h1>
-        <nav>
-            <menu>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="groups.html">Groups</a></li>
-                <li><a href="chatpage.html">Chat</a></li>
-                <li><a href="private.html">Direct Message</a></li>
-            </menu>
-        </nav>
+    <link rel = "stylesheet" href = "main.css" />
 
-        <hr />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+
+</head>
+
+<body class = "bg-dark text-light">
+    <header class = "container-fluid">
+        <nav style = "background-color: #554156" class = "navbar fixed-top navbar-dark">
+            <ul style = "margin-left: 5em">
+                <li class = "nav-item">
+                    <a class = "nav-link active" href="index.html">Home</a>
+                </li>
+                <li class = "nav-item">
+                    <a class = "nav-link active" href="groups.html">Groups</a>
+                </li>
+                 <li class = "nav-item">
+                    <a class = "nav-link active" href="chatpage.html">Chat</a>
+                </li>
+                 <li class = "nav-item">
+                    <a class = "nav-link active" href="private.html">Direct Message</a>
+                </li>
+            </ul>
+        </nav>
 
     </header>
 
     <main>
-        <h1>Welcome</h1>
+        <h1>Yappersville</h1>
+        <div class="main-bucket">
         <p>Login to chat with your buddies</p>
         <form method="get" action="groups.html">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Your name here" />
 
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Your Password here" />
+            <!-- Username -->
+            <div class="mb-3"> <!-- mb-3 adds a margin to the bottom -->
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Your name here">
+            </div>
 
-            <button type="submit">Login</button>
+            <!-- Password -->
+            <div class="mb-3"> <!-- mb-3 adds a margin to the bottom -->
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Your Password here">
+            </div>
+
+            <!-- Buttons -->
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <div class="col">
+                    <!-- Add the necessary action or link for the Register button -->
+                    <button type="button" class="btn btn-secondary">Register</button>
+                </div>
+            </div>
         </form>
+</div>
+
 
     </main>
 
