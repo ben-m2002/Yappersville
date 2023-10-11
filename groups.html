@@ -4,26 +4,46 @@
     <meta charset="UTF-8" />
     <meta name = "viewport"  content = "width=device-width, initial-scale=1.0" />
     <title>Yappersville</title>
-</head>
-<body>
-    <header>
-        <h1>Yappersville</h1>
-        <nav>
-            <menu>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="groups.html">Groups</a></li>
-                <li><a href="chatpage.html">Chat</a></li>
-                <li><a href="private.html">Direct Message</a></li>
-            </menu>
-        </nav>
 
-        <hr />
+    <link rel = "stylesheet" href = "groups.css" />
+
+     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+</head>
+
+<body class = "bg-dark text-light">
+
+     <header class = "container-fluid">
+        <nav style = "background-color: #554156" class = "navbar fixed-top navbar-dark">
+            <ul style = "margin-left: 5em">
+                <li class = "nav-item">
+                    <a class = "nav-link active" href="index.html">Home</a>
+                </li>
+                <li class = "nav-item">
+                    <a class = "nav-link active" href="groups.html">Groups</a>
+                </li>
+                 <li class = "nav-item">
+                    <a class = "nav-link active" href="chatpage.html">Chat</a>
+                </li>
+                 <li class = "nav-item">
+                    <a class = "nav-link active" href="private.html">Direct Message</a>
+                </li>
+            </ul>
+        </nav>
 
     </header>
 
-    <main>
-        <h4>Pick a group</h4>
-        <div>
+    <main class="container-fluid">
+        <!-- Centered title -->
+        <h4 class="text-center mb-4">Pick a group</h4>
+
+        <!-- Scrollable grid of groups -->
+        <div class="group-grid mb-4">
+
             <a href="chatpage.html"><button>
                 <img height = "50" width="50" src = "./images/itunes.png" alt = "Cool Kids">
                 Cool Kids Club</button>
@@ -33,8 +53,7 @@
                  CS 4 Life Group
                 </button>
              </a>
-        </div>
-        <div>
+
             <a href="chatpage.html"><button>
                 <img height = "50" width="50" src = "./images/VideoGame.jpeg" alt = "Video Game">
                 Video Game Slayers
@@ -42,24 +61,30 @@
             </a>
              <a href="chatpage.html"><button>
                 <img height = "50" width="50" src = "./images/Waterballon.png" alt = "Water Ballons">
-                 Water Ballons 4 Life
+                 Water Balloons 4 Life
              </button>
              </a>
+
         </div>
 
-        <hr />
+        <!-- Join and Create Group Sections -->
+        <div class="row">
+            <!-- Join Group Section -->
+            <div class="col-md-6">
+                <label for="join-group">Join A Group!</label>
+                <input type="text" id="join-group" class="form-control mb-2" placeholder="Enter a group ID" />
+                <button type="submit" class="btn btn-primary">Go</button>
+            </div>
 
-         <form method="get" action="chatpage.html">
-            <label for="join-group">Join A Group!</label>
-            <input type="text" id="join-group" placeholder="Enter a group ID" />
-            <button type="submit">Go</button>
-
-            <label for="create-group">Create a Group!</label>
-            <input type="text" id="create-group" placeholder="Enter a group name" />
-            <button type="submit">Go</button>
-        </form>
-
+            <!-- Create Group Section -->
+            <div class="col-md-6">
+                <label for="create-group">Create a Group!</label>
+                <input type="text" id="create-group" class="form-control mb-2" placeholder="Enter a group name" />
+                <button type="submit" class="btn btn-primary">Go</button>
+            </div>
+        </div>
     </main>
+
 
     <footer>
         <hr />

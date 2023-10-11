@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 375px;
+    height: 90vh; /* make sure the body covers the full viewport height */
 }
 
 header {
@@ -17,7 +18,7 @@ footer {
 }
 
 nav.navbar {
-  justify-content: center;
+  justify-content: start;
 }
 
 nav.navbar ul {
