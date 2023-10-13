@@ -108,7 +108,6 @@ form button:active {
     transform: scale(1);   /* Reset button size when pressed */
 }
 
-
 footer {
     display: flex;
     flex: 0 0 30px;
