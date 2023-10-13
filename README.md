@@ -61,4 +61,8 @@ Do you and your buddies want a place to talk after school, and don't know where 
 - Database : There is a database to hold login info and holds chats according to groups, and also private messages
 - Websocket : There is real time chatting in the groups and private and messaging
 
+## CSS Deliverable
+
+### This deliverable just illustrates my knowledge of css and the principles that apply to styling a page
+
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
