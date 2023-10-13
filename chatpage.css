@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* full viewport height */
+    box-sizing: border-box;
+}
+
+header {
+  flex: 0 0 80px;
+  padding: 20px 0;
+}
+
+nav.navbar {
+  justify-content: start;
+}
+
+nav.navbar ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+    margin-right: 1em;
+    margin-top: 0.5em;
+}
+
+main {
+    flex: 1; /* to take the remaining space in viewport after header and footer */
+    display: flex;
+    padding: 1em; /* some spacing around the main content */
+    box-sizing: border-box;
+}
+
+
+main > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* Users list */
+main .users {
+    flex: none;
+    width: 15%;
+    height: 82%;
+    padding: 1em;
+    overflow-y: auto; /* in case there are many users */
+    margin-top: 3.3em;
+    margin-left: -10em;
+    background-color: #2C3539;
+}
+
+main .chat {
+    width: 60%;
+    height: 82%;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: #2C3539;
+    margin-left: 1em;
+    margin-top: 3.4em;
+}
+
+main .chat > ul {
+    flex: 1;
+    overflow-y: auto; /* making chat scrollable */
+    padding: 1em;
+    margin-bottom: 1em; /* space between chat and typing area */
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    align-items : flex-end;
+    width: 75%;
+    margin-top: 2em;
+}
+
+
+form input {
+    flex: 1;
+    margin-right: 1em; /* some spacing between input and buttons */
+}
+
+
+form button {
+    margin-right: 1em;
+    padding: 6px 10px;   /* Reduced padding for smaller button size */
+    font-size: 0.9em;    /* Adjust the font size as necessary */
+    background-color: #2B4F81;  /* Deep slate blue background */
+    color: #EAEAEA;       /* Soft white text */
+    border: none;         /* No border */
+    border-radius: 5px;   /* Rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
+    cursor: pointer;      /* Hand cursor on hover */
+}
+
+form button:hover {
+    background-color: #1B3F8B; /* Slightly darker blue on hover */
+    transform: scale(1.05);    /* Slightly enlarge button on hover */
+}
+
+form button:active {
+    transform: scale(1);   /* Reset button size when pressed */
+}
+
+
+
+footer {
+    display: flex;
+    flex: 0 0 30px;
+    padding: 10px 0;
+    max-height: 30px;
+}
