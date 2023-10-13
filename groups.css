@@ -3,6 +3,7 @@ body {
     flex-direction: column;
     min-width: 375px;
     height: 90vh; /* make sure the body covers the full viewport height */
+     font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
 }
 
 main {
