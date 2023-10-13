@@ -64,5 +64,11 @@ Do you and your buddies want a place to talk after school, and don't know where 
 ## CSS Deliverable
 
 ### This deliverable just illustrates my knowledge of css and the principles that apply to styling a page
+-Header, footer, and main content body
+-Navigation elements - Made a really cool nav bar
+-Responsive to window resizing - My app looks great on all window sizes and devices
+-Application elements - Used good contrast and whitespace
+-Application text content - Consistent fonts
+-Application images - I have images in the groups page
 
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
