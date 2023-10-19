@@ -7,34 +7,25 @@ function onRegister (){
         alert("Please enter a username and password");
         return;
     }
-
-    let myChats = {  // this will create a chats objects that will be used to store the chats
-        author: nameEl.value,
-        groupChats: [
-            {}, // hold the chat the group it was in, and other data
-        ],
-        privateChats : [
-            {}, // will hold the person conversing with and other data
-        ]
+    let user = {
+        name : nameEl.value,
+        password : passwordEl.value,
+        chats : {
+            author: nameEl.value,
+            groupChats: [],
+            privateChats : [],
+        },
+        groups : [],
     }
-
-    let myGroups = [] // this will have objects for the group data corresponding to the groups
-
-
-    localStorage.setItem("user", nameEl.value);
-    localStorage.setItem("password", passwordEl.value);
-    localStorage.setItem("myChats", JSON.stringify(myChats));
-    localStorage.setItem("myGroups", JSON.stringify(myGroups));
-
+    localStorage.setItem("user", JSON.stringify(user));
     window.location.href = "groups.html";
 }
 
 function onLogin (){
-    const user = localStorage.getItem("user");
-    const password = localStorage.getItem("password");
-
-    console.log(user);
-    console.log(password);
+    let userJson = localStorage.getItem("user");
+    let userObject = JSON.parse(userJson);
+    let user = userObject.name;
+    let password = userObject.password;
 
     if (user === nameEl.value && password === passwordEl.value){
         console.log("login successful");

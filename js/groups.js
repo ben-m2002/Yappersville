@@ -1,7 +1,9 @@
 const join_text = document.querySelector('#join-group');
-const create_text = document.querySelector('#create-group');
 const join_button = document.querySelector('#join-button');
+
+const create_text = document.querySelector('#create-group');
 const create_button = document.querySelector('#create-button');
+
 const image_label = document.querySelector('#image_upload');
 let imageData = null;
 
@@ -32,11 +34,15 @@ function getRawImage (event){
 
 
 function onCreate (){
-    const user = localStorage.getItem("user");
-    const groupId = generateUniqueID();
-    const groupName = join_text.value;
+    let userJson = localStorage.getItem("user");
+    let userObject = JSON.parse(userJson);
+    let user = userObject.name;
 
-    if (groupName === "" || !checkForWhiteSpace(groupName)){
+    const groupId = generateUniqueID();
+    const groupName = create_text.value;
+
+
+    if (groupName === "" || checkForWhiteSpace(groupName)){
         alert("Please a real group name!");
         return;
     }
@@ -65,6 +71,10 @@ function onCreate (){
     let allGroups = JSON.parse(localStorage.getItem("groups"));
     allGroups.push(group);
     localStorage.setItem("groups", JSON.stringify(allGroups));
+
+    // We are going to add this group to the users groups here
+
+
 
     console.log("Group created");
 }
