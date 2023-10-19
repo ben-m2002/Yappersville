@@ -54,7 +54,7 @@ function onCreate (){
     let group = {
         id : groupId,
         groupName : groupName,
-        creator : user,
+        creator : userObject, // in the future we will use a join so that if it updates in one place it updates in all places
         dateCreated : Date.now(),
         profilePic : imageData,
         allChats : [
@@ -64,8 +64,8 @@ function onCreate (){
                 "text" : "This is just texter text",
             }
         ],
-        members : [user],
-        admins : [user],
+        members : [userObject], // in the future we will use a join so that if it updates in one place it updates in all places
+        admins : [userObject], // in the future we will use a join so that if it updates in one place it updates in all places
     }
 
     let allGroups = JSON.parse(localStorage.getItem("groups"));
@@ -74,6 +74,7 @@ function onCreate (){
 
     // We are going to add this group to the users groups here
 
+    // in the future we will use a join so that if it updates in one place it updates in all places (groups)
 
 
     console.log("Group created");
