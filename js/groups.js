@@ -52,11 +52,11 @@ function onCreate (){
     }
 
     let group = {
-        "id" : groupId,
-        "group_name" : groupName,
-        "creator" : user,
-        "dataCreated" : Date.now(),
-        "profilePicture" : imageData,
+        id : groupId,
+        groupName : groupName,
+        creator : user,
+        dateCreated : Date.now(),
+        profilePic : imageData,
         allChats : [
             {
                 "author" : "Admin",
@@ -64,8 +64,8 @@ function onCreate (){
                 "text" : "This is just texter text",
             }
         ],
-        "members" : [this.creator],
-        "admins" : [this.creator],
+        members : [user],
+        admins : [user],
     }
 
     let allGroups = JSON.parse(localStorage.getItem("groups"));
