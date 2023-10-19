@@ -40,8 +40,7 @@
         <h1>Yappersville</h1>
         <div class="main-bucket">
         <p>Login to chat with your buddies</p>
-        <form method="get" action="groups.html">
-
+        <form method="get">
 
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -57,11 +56,10 @@
 
             <div class="row">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button onclick= "onLogin()" id = "LoginButton" type="submit" class="btn btn-primary">Login</button>
                 </div>
                 <div class="col">
-
-                    <button type="button" class="btn btn-secondary">Register</button>
+                    <button onclick= "onRegister()" id = "RegisterButton" type="button" class="btn btn-secondary">Register</button>
                 </div>
             </div>
         </form>
@@ -76,6 +74,6 @@
         <br />
         <a href="https://github.com/ben-m2002/startup"> GitHub</a>
     </footer>
-
+    <script src="./js/main.js" ></script>
 </body>
 </html>
