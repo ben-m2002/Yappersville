@@ -72,16 +72,19 @@
             <div class="col-md-6">
                 <label for="join-group">Join A Group!</label>
                 <input type="text" id="join-group" class="form-control mb-2" placeholder="Enter a group ID" />
-                <button type="submit" class="btn btn-primary">Go</button>
+                <button id = "join-button" type="submit" class="btn btn-primary">Go</button>
             </div>
 
             <!-- Create Group Section -->
             <div class="col-md-6">
                 <label for="create-group">Create a Group!</label>
                 <input type="text" id="create-group" class="form-control mb-2" placeholder="Enter a group name" />
-                <button type="submit" class="btn btn-primary">Go</button>
+                <button  id = "create-button" onclick="onCreate()" type="submit" class="btn btn-primary">Go</button>
+                <input type = "file" id = "image_upload" accept = "image/*" style = "display:none;"/>
+                <button onclick = "document.getElementById('image_upload').click()" type="submit" class="btn btn-secondary">Upload Image</button>
             </div>
         </div>
+
     </main>
 
 
@@ -92,5 +95,7 @@
         <a href="https://github.com/ben-m2002/startup"> GitHub</a>
     </footer>
 
+     <script src = "./js/global.js"></script>
+     <script src="./js/groups.js"></script>
 </body>
 </html>

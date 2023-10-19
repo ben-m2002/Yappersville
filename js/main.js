@@ -1,10 +1,8 @@
-
+const nameEl = document.querySelector('#name');
+const passwordEl = document.querySelector('#password');
 
 
 function onRegister (){
-    const nameEl = document.querySelector('#name');
-    const passwordEl = document.querySelector('#password');
-
     if (nameEl.value === "" || passwordEl.value === ""){
         alert("Please enter a username and password");
         return;
@@ -12,12 +10,12 @@ function onRegister (){
 
     let myChats = {  // this will create a chats objects that will be used to store the chats
         author: nameEl.value,
-        groupChats: {  // the string will be the group name
-
-        },
-        privateChats : { // the string will be the private message bame
-
-        }
+        groupChats: [
+            {}, // hold the chat the group it was in, and other data
+        ],
+        privateChats : [
+            {}, // will hold the person conversing with and other data
+        ]
     }
 
     let myGroups = [] // this will have objects for the group data corresponding to the groups
@@ -32,9 +30,6 @@ function onRegister (){
 }
 
 function onLogin (){
-    const nameEl = document.querySelector('#name');
-    const passwordEl = document.querySelector('#password');
-
     const user = localStorage.getItem("user");
     const password = localStorage.getItem("password");
 
