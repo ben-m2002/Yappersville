@@ -76,6 +76,11 @@ function onCreate (){
 
     // in the future we will use a join so that if it updates in one place it updates in all places (groups)
 
+    // in the future we will use a join so that if it updates in one place it updates in all places (user)
+
+    userObject.groups.push(group);
+    localStorage.setItem("user", JSON.stringify(userObject));
+
 
     console.log("Group created");
 }
@@ -83,6 +88,19 @@ function onCreate (){
 function onJoin (){
     const user = localStorage.getItem("user");
     const groupId = join_text.value;
+
+    // make sure the group id is valid
+    if (groupId === "" || checkForWhiteSpace(groupId)){
+        alert("Please a real group id!");
+        return;
+    }
+
+    let allGroups = JSON.parse(localStorage.getItem("groups"));
+
+    for (groups in allGroups){
+
+    }
+
 }
 
 image_label.addEventListener('change', getRawImage);
