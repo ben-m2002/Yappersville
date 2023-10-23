@@ -87,6 +87,7 @@ function onCreate (){
 
 function onJoin (){
     const user = localStorage.getItem("user");
+    let userObject = JSON.parse(user);
     const groupId = join_text.value;
 
     // make sure the group id is valid
@@ -112,7 +113,19 @@ function onJoin (){
         return;
     }
 
+    // add the user to the group
 
+    joinedGroup.members.push(user);
+
+    // add the group to the users groups
+
+    userObject.groups.push(joinedGroup);
+
+
+    // update the local storage
+
+    localStorage.setItem("user", JSON.stringify(userObject));
+    localStorage.setItem("groups", JSON.stringify(allGroups));
 
 }
 
