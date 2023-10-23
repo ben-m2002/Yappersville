@@ -15,6 +15,27 @@ function generateUniqueID(){
     return (Date.now().toString(36) + Math.random().toString(36).substring(2, 5)).toUpperCase().substring(0, 8)
 }
 
+function createGroupButtonElement (name, image, altText){
+    const div = document.createElement('div');
+    div.classList.add("group-card");
+
+    const button = document.createElement('button');
+    const img =  document.createElement('img');
+
+    img.src = image;
+    img.alt = altText;
+    img.width = 50;
+    img.height = 50;
+    img.className = "group-button-image";
+
+    button.appendChild(img); // make the image a child of the button
+    button.appendChild(document.createTextNode(name)); // make the name a child of the button
+
+    div.appendChild(button); // make the button a child of the div
+
+    document.querySelector('#groups-grid').appendChild(div); // make the div a child of the group-buttons div
+}
+
 function getRawImage (event){
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -36,7 +57,6 @@ function getRawImage (event){
 function onCreate (){
     let userJson = localStorage.getItem("user");
     let userObject = JSON.parse(userJson);
-    let user = userObject.name;
 
     const groupId = generateUniqueID();
     const groupName = create_text.value;
@@ -54,7 +74,7 @@ function onCreate (){
     let group = {
         id : groupId,
         groupName : groupName,
-        creator : userObject, // in the future we will use a join so that if it updates in one place it updates in all places
+        creator : userObject.name, // in the future we will use a join so that if it updates in one place it updates in all places
         dateCreated : Date.now(),
         profilePic : imageData,
         allChats : [
@@ -64,8 +84,8 @@ function onCreate (){
                 "text" : "This is just texter text",
             }
         ],
-        members : [userObject], // in the future we will use a join so that if it updates in one place it updates in all places
-        admins : [userObject], // in the future we will use a join so that if it updates in one place it updates in all places
+        members : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
+        admins : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
     }
 
     let allGroups = JSON.parse(localStorage.getItem("groups"));
@@ -78,7 +98,7 @@ function onCreate (){
 
     // in the future we will use a join so that if it updates in one place it updates in all places (user)
 
-    userObject.groups.push(group);
+    userObject.groups.push(group.id);
     localStorage.setItem("user", JSON.stringify(userObject));
 
 
@@ -115,11 +135,11 @@ function onJoin (){
 
     // add the user to the group
 
-    joinedGroup.members.push(user);
+    joinedGroup.members.push(user.name);
 
     // add the group to the users groups
 
-    userObject.groups.push(joinedGroup);
+    userObject.groups.push(joinedGroup.id);
 
 
     // update the local storage
@@ -129,4 +149,12 @@ function onJoin (){
 
 }
 
+function populateGroups (){ // in the future we will want to parse the database to get only groups the user is in
+    let allGroups = JSON.parse(localStorage.getItem("groups"));
+    for (let group in allGroups){
+        createGroupButtonElement(group.groupName, group.profilePic, group.groupName);
+    }
+}
+
 image_label.addEventListener('change', getRawImage);
+populateGroups();
