@@ -95,11 +95,24 @@ function onJoin (){
         return;
     }
 
+    // look for the group in the local storage
+
     let allGroups = JSON.parse(localStorage.getItem("groups"));
-
-    for (groups in allGroups){
-
+    let joinedGroup = null;
+    for (let group in allGroups){
+        if (group.id === groupId){
+            joinedGroup = group;
+        }
     }
+
+    // alert user if group doesnt exit
+
+    if (joinedGroup === null) {
+        alert("Group not found");
+        return;
+    }
+
+
 
 }
 
