@@ -7,9 +7,6 @@ const create_button = document.querySelector('#create-button');
 const image_label = document.querySelector('#image_upload');
 let imageData = null;
 
-// This will be all the groups created by the local user
-let groups = []
-localStorage.setItem("groups", JSON.stringify(groups));
 
 function generateUniqueID(){
     return (Date.now().toString(36) + Math.random().toString(36).substring(2, 5)).toUpperCase().substring(0, 8)
@@ -89,7 +86,7 @@ function onCreate (){
 
     }
 
-    let allGroups = JSON.parse(localStorage.getItem("groups"));
+    let allGroups = JSON.parse(localStorage.getItem("groups")) || [];
     allGroups.push(group);
     localStorage.setItem("groups", JSON.stringify(allGroups));
 
@@ -122,7 +119,7 @@ function onJoin (){
 
     // look for the group in the local storage
 
-    let allGroups = JSON.parse(localStorage.getItem("groups"));
+    let allGroups = JSON.parse(localStorage.getItem("groups")) || [];
     let joinedGroup = null;
     for (let group in allGroups){
         if (group.id === groupId){
@@ -157,7 +154,7 @@ function onJoin (){
 
 function populateGroups (){ // in the future we will want to parse the database to get only groups the user is in
     let allGroups = JSON.parse(localStorage.getItem("groups"));
-    for (let group in allGroups){
+    for (let group of allGroups){
         createGroupButtonElement(group.groupName, group.profilePic, group.groupName);
     }
 }
