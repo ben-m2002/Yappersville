@@ -86,6 +86,7 @@ function onCreate (){
         ],
         members : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
         admins : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
+
     }
 
     let allGroups = JSON.parse(localStorage.getItem("groups"));
@@ -103,6 +104,9 @@ function onCreate (){
 
 
     console.log("Group created");
+
+    // in the future we will have a store for the users current group
+    window.location.href = "chatpage.html";
 }
 
 function onJoin (){
@@ -147,6 +151,8 @@ function onJoin (){
     localStorage.setItem("user", JSON.stringify(userObject));
     localStorage.setItem("groups", JSON.stringify(allGroups));
 
+    // in the future we will have a store for the users current group
+    window.location.href = "chatpage.html";
 }
 
 function populateGroups (){ // in the future we will want to parse the database to get only groups the user is in
