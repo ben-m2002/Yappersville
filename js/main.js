@@ -17,6 +17,7 @@ function onRegister (){
         },
         groups : [],
         currentGroup : null, // current group the user has picked
+        currentDM : null,
     }
     localStorage.setItem("user", JSON.stringify(user));
     window.location.href = "groups.html";

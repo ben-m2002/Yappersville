@@ -20,6 +20,13 @@ function setUpUsers (currentGroup){
         button.className = "userBoxButton";
         button.textContent = member;
 
+        button.onclick = function (){
+            let userObject = JSON.parse(user);
+            userObject.currentDM = member;
+            localStorage.setItem("user", JSON.stringify(userObject));
+            window.location.href = "private.html";
+        }
+
         userDiv.appendChild(button);
         usersDiv.appendChild(userDiv);
     }

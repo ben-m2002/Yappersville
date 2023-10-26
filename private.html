@@ -5,8 +5,7 @@
     <meta name = "viewport"  content = "width=device-width, initial-scale=1.0" />
     <title>Yappersville</title>
 
-
-    <link rel = "stylesheet" href = "private.css" />
+    <link rel = "stylesheet" href = "chatpage.css" />
 
      <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -18,7 +17,7 @@
 </head>
 
 <body class = "bg-dark text-light">
-    <header class = "container-fluid">
+     <header class = "container-fluid">
         <nav style = "background-color: #554156" class = "navbar fixed-top navbar-dark">
             <ul style = "margin-left: 5em">
                 <li class = "nav-item">
@@ -35,37 +34,39 @@
                 </li>
             </ul>
         </nav>
+
     </header>
 
 
 
-   <main>
-         <h3>Private Message</h3>
-        <div class = "users">
+    <main>
+
+        <div id = "allUsers" class = "users">
             <h4>Users</h4>
-            <ul>
-                <li>Ben</li>
-                <li>John</li>
-            </ul>
         </div>
 
         <div class = "chat">
-            <h4>Chat Box</h4>
-            <ul>
-                 <li>Ben: Yoooo John!!!!!</li>
-                 <li>John: I'll keep it real I don't like Tim</li>
-            </ul>
+            <h4 id = "chatTitle">Chat Box</h4>
 
-            <form>
-                <label for="chatbox"></label>
-                <input type="text" id="chatbox" placeholder="type here to chat" />
-                <button type="submit">Submit</button>
-                <button type="submit">Tell A Joke</button>
-            </form>
+            <div id = "chatFrame">
+                <div class = "filler"></div>
+            </div>
+
+
+            <div id = "inputSection">
+                <input type="text" id="chatbox" placeholder="type here to chat"/>
+                <button id = "userSubmitButton" onclick="onSubmit()">Submit</button>
+            </div>
 
         </div>
 
+         <script src="./js/global.js"></script>
+         <script src="./js/privateMessage.js" ></script>
+
     </main>
+
+
+
 
     <footer>
         <hr />
