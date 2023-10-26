@@ -97,8 +97,8 @@ function onCreate (){
     // in the future we will use a join so that if it updates in one place it updates in all places (user)
 
     userObject.groups.push(group.id);
+    userObject.currentGroup = group.id;
     localStorage.setItem("user", JSON.stringify(userObject));
-
 
     console.log("Group created");
 
@@ -141,7 +141,7 @@ function onJoin (){
     // add the group to the users groups
 
     userObject.groups.push(joinedGroup.id);
-
+    userObject.currentGroup = joinedGroup.id;
 
     // update the local storage
 
