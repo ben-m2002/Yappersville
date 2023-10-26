@@ -34,39 +34,28 @@
                 </li>
             </ul>
         </nav>
+
     </header>
 
 
 
     <main>
 
-        <h3>CS WARRIORS</h3>
-
-        <div class = "users">
+        <div id = "allUsers" class = "users">
             <h4>Users</h4>
-            <ul>
-                <li>Tim</li>
-                <li>Ada</li>
-                <li>Ben</li>
-                <li>John</li>
-            </ul>
         </div>
 
         <div class = "chat">
-            <h4>Chat Box</h4>
-            <ul>
-                <li>Tim: Hey guys, I'm new here</li>
-                 <li>Ada: Welcome Time, it's nice to meet you!</li>
-                 <li>Ben: YooooTIM!!!!!</li>
-                 <li>John: I'll keep it real I don't like Tim</li>
-            </ul>
+            <h4 id = "chatTitle">Chat Box</h4>
 
-            <form>
-                <label for="chatbox"></label>
-                <input type="text" id="chatbox" placeholder="type here to chat" />
-                <button type="submit">Submit</button>
-                <button type="submit">Tell A Joke</button>
-            </form>
+            <div id = "chatFrame">
+            </div>
+
+
+            <div id = "inputSection">
+                <input type="text" id="chatbox" placeholder="type here to chat"/>
+                <button id = "userSubmitButton" onclick="onSubmit()">Submit</button>
+            </div>
 
         </div>
 
