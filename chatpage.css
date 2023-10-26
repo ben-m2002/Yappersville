@@ -85,13 +85,17 @@ main .chat {
 
 #chatFrame {
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: flex-end;
     height: 80%;
     overflow-y: scroll; /* making chat scrollable */
     padding: 0.5em;
     margin-bottom: 1em; /* space between chat and typing area */
     background-color: #25292b;
+}
+
+.filler {
+    flex-grow: 1;
 }
 
 main .textfield{

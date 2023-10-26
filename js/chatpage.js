@@ -56,7 +56,7 @@ function setUpPage (){
 
 function setUpChats (){
     let currentGroup = returnCurrentGroup();
-    let allChats = currentGroup.allChats.reverse();
+    let allChats = currentGroup.allChats;
 
     for (let chat of allChats){
         createTextBox(chat.author, chat.text);
@@ -82,6 +82,8 @@ function createTextBox (author, message){
     div.appendChild(p2);
 
     chatFrame.appendChild(div);
+
+    chatFrame.scrollTop = chatFrame.scrollHeight;
 }
 
 function onSubmit () {
