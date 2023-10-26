@@ -12,7 +12,7 @@ function generateUniqueID(){
     return (Date.now().toString(36) + Math.random().toString(36).substring(2, 5)).toUpperCase().substring(0, 8)
 }
 
-function createGroupButtonElement (name, image, altText){
+function createGroupButtonElement (name, image, altText, id){
     const div = document.createElement('div');
     div.classList.add("group-card");
 
@@ -27,6 +27,14 @@ function createGroupButtonElement (name, image, altText){
 
     button.appendChild(img); // make the image a child of the button
     button.appendChild(document.createTextNode(name)); // make the name a child of the button
+
+    button.onclick = function (){
+        let userJson = localStorage.getItem("user");
+        let userObject = JSON.parse(userJson);
+        userObject.currentGroup = id;
+        localStorage.setItem("user", JSON.stringify(userObject));
+        window.location.href = "chatpage.html";
+    }
 
     div.appendChild(button); // make the button a child of the div
 
@@ -155,7 +163,7 @@ function onJoin (){
 function populateGroups (){ // in the future we will want to parse the database to get only groups the user is in
     let allGroups = JSON.parse(localStorage.getItem("groups"));
     for (let group of allGroups){
-        createGroupButtonElement(group.groupName, group.profilePic, group.groupName);
+        createGroupButtonElement(group.groupName, group.profilePic, group.groupName, group.id);
     }
 }
 
