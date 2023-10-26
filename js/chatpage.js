@@ -51,10 +51,16 @@ function setUpPage (){
 
     // were going to set up the users box
     setUpUsers(currentGroup);
+    setUpChats();
 }
 
 function setUpChats (){
+    let currentGroup = returnCurrentGroup();
+    let allChats = currentGroup.allChats.reverse();
 
+    for (let chat of allChats){
+        createTextBox(chat.author, chat.text);
+    }
 }
 
 // next we will create the chat function

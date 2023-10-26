@@ -84,9 +84,9 @@ function onCreate (){
         profilePic : imageData,
         allChats : [
             {
-                "author" : "Admin",
-                "time" : 0,
-                "text" : "This is just texter text",
+                author : "Admin",
+                time : 0,
+                text : "This is just texter text",
             }
         ],
         members : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
