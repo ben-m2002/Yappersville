@@ -22,7 +22,22 @@ function setUpUsers (currentGroup){
 
         button.onclick = function (){
             let userObject = JSON.parse(user);
-            userObject.currentDM = member;
+            let dmID = hashString((userObject.name + member).sort());
+
+            // check if dm exists, if not create it
+
+            let dms =  localStorage.getItem("privateMessages") || {};
+
+            if (dms[dmID] === undefined){
+                dms[dmID] = {
+                    members : [userObject.name, member],
+                    messages : []
+                };
+            }
+
+
+            userObject.currentDM = dmID
+            localStorage.setItem("privateMessages", JSON.stringify(dms));
             localStorage.setItem("user", JSON.stringify(userObject));
             window.location.href = "private.html";
         }
@@ -66,32 +81,13 @@ function setUpChats (){
     let allChats = currentGroup.allChats;
 
     for (let chat of allChats){
-        createTextBox(chat.author, chat.text);
+        createTextBox(chatFrame,chat.author, chat.text);
     }
 }
 
 // next we will create the chat function
 
-function createTextBox (author, message){
-     let div = document.createElement("div");
-    div.className = "textfield";
 
-    let p1 = document.createElement("p");
-    p1.className = "textfield-name";
-
-    let p2 = document.createElement("p");
-    p2.className = "textfield-text";
-
-    p1.textContent = author;
-    p2.textContent = message;
-
-    div.appendChild(p1);
-    div.appendChild(p2);
-
-    chatFrame.appendChild(div);
-
-    chatFrame.scrollTop = chatFrame.scrollHeight;
-}
 
 function onSubmit () {
     let message = userTextBox.value;
@@ -104,7 +100,7 @@ function onSubmit () {
     let userObject = JSON.parse(user);
     let author = userObject.name;
 
-    createTextBox(author, message);
+    createTextBox(chatFrame, author, message)
 
     // Now we gotta save it
 

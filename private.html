@@ -5,7 +5,7 @@
     <meta name = "viewport"  content = "width=device-width, initial-scale=1.0" />
     <title>Yappersville</title>
 
-    <link rel = "stylesheet" href = "chatpage.css" />
+    <link rel = "stylesheet" href = "private.css" />
 
      <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -46,20 +46,21 @@
         </div>
 
         <div class = "chat">
-            <h4 id = "chatTitle">Chat Box</h4>
+            <h4 id = "chatTitle-private">Chat Box</h4>
 
-            <div id = "chatFrame">
+            <div id = "chatFrame-private">
                 <div class = "filler"></div>
             </div>
 
 
             <div id = "inputSection">
-                <input type="text" id="chatbox" placeholder="type here to chat"/>
-                <button id = "userSubmitButton" onclick="onSubmit()">Submit</button>
+                <input type="text" id="chatbox-private" placeholder="type here to chat"/>
+                <button id = "userSubmitButton-private" onclick="onSubmit()">Submit</button>
             </div>
 
         </div>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.3.1/sha256.js"></script>
          <script src="./js/global.js"></script>
          <script src="./js/privateMessage.js" ></script>
 

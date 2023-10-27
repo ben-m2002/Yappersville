@@ -12,8 +12,6 @@ function onRegister (){
         password : passwordEl.value,
         chats : {
             author: nameEl.value,
-            groupChats: [],
-            privateChats : [],
         },
         groups : [],
         currentGroup : null, // current group the user has picked

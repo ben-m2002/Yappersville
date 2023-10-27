@@ -69,21 +69,20 @@ main .userBoxButton {
     border: none;
 }
 
-main .chat {
-    width: 60%;
-    height: 70vh;
-    padding: 1em;
+#chatFrame {
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    background-color: #2C3539;
-    margin-left: 1em;
-    margin-top: 3.4em;
+    position: relative;
+    height: 100%;
+    overflow-y: auto; /* making chat scrollable */
+    padding: 0.5em;
+    margin-bottom: 1em; /* space between chat and typing area */
+    background-color: #25292b;
 }
 
 
 
-#chatFrame {
+#chatFrame-private {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;

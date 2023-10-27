@@ -1,26 +1,40 @@
-function createTextBox (author, message){
-     let div = document.createElement("div");
-    div.className = "textfield";
+// the way this will work is I will get the 2 names and sort them alphabetically, and then hash it
+// that way the dms can be unique and stored
 
-    let p1 = document.createElement("p");
-    p1.className = "textfield-name";
+let user = localStorage.getItem("user");
+let dms = localStorage.getItem("privateMessages");
 
-    let p2 = document.createElement("p");
-    p2.className = "textfield-text";
+let allUsers = document.querySelector("#allUsers");
+let chatTitle = document.querySelector("#chatTitle-private");
+let chatFrame = document.querySelector("#chatFrame-private");
+let inputField = document.querySelector("#chatbox-private");
+let sumbitButton = document.querySelector("#userSubmitButton-private");
 
-    p1.textContent = author;
-    p2.textContent = message;
 
-    div.appendChild(p1);
-    div.appendChild(p2);
+function setUpPage (){
+    let userObject = JSON.parse(user);
+    let dMObject = JSON.parse(dms);
+    let dmID = userObject.currentDM;
+    let dm = dMObject[dmID];
+    let members = dm.members;
 
-    chatFrame.appendChild(div);
 
-    chatFrame.scrollTop = chatFrame.scrollHeight;
+    // set the title
+
+    for (let member of members){
+        if (member !== userObject.name){
+            chatTitle.textContent = member;
+        }
+    }
+
+    // populate the users
+
+
+
 }
 
 function onSubmit () {
-    let message = userTextBox.value;
+    let message = inputField.value;
 
     if (message === "" || checkForWhiteSpace(message)) {
         alert("Please enter a real message");
@@ -30,9 +44,9 @@ function onSubmit () {
     let userObject = JSON.parse(user);
     let author = userObject.name;
 
-    createTextBox(author, message);
+    createTextBox(chatFrame, author, message);
 
-    // Now we gotta save it
+    // Now we save it to local storage
 
     let currentGroup = returnCurrentGroup();
 
@@ -41,12 +55,6 @@ function onSubmit () {
         time : 0,
         text : message,
     }
-
-
-    // now we gotta save it to local storage
-    currentGroup.allChats.push(chat);
-    localStorage.setItem("groups", JSON.stringify(allGroups));
-
 }
 
 userTextBox.addEventListener("keypress", function (event) {
