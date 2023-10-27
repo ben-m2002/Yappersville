@@ -22,7 +22,9 @@ function setUpUsers (currentGroup){
 
         button.onclick = function (){
             let userObject = JSON.parse(user);
-            let dmID = hashString((userObject.name + member).sort());
+            let namesArray = [userObject.name, member];
+            let sortedNamesString = namesArray.sort().join('');
+            let dmID = hashString(sortedNamesString);
 
             // check if dm exists, if not create it
 

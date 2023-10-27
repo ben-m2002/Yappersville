@@ -129,7 +129,7 @@ function onJoin (){
 
     let allGroups = JSON.parse(localStorage.getItem("groups")) || [];
     let joinedGroup = null;
-    for (let group in allGroups){
+    for (let group of allGroups){
         if (group.id === groupId){
             joinedGroup = group;
         }
@@ -144,7 +144,7 @@ function onJoin (){
 
     // add the user to the group
 
-    joinedGroup.members.push(user.name);
+    joinedGroup.members.push(userObject.name);
 
     // add the group to the users groups
 
@@ -160,10 +160,15 @@ function onJoin (){
     window.location.href = "chatpage.html";
 }
 
-function populateGroups (){ // in the future we will want to parse the database to get only groups the user is in
+function populateGroups (){
     let allGroups = JSON.parse(localStorage.getItem("groups"));
+    let userObject = JSON.parse(localStorage.getItem("user"));
     for (let group of allGroups){
-        createGroupButtonElement(group.groupName, group.profilePic, group.groupName, group.id);
+        for (let member of group.members){
+            if (member === userObject.name){
+                createGroupButtonElement(group.groupName, group.profilePic, group.groupName, group.id);
+            }
+        }
     }
 }
 

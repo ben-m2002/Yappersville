@@ -22,7 +22,13 @@ function onRegister (){
 }
 
 function onLogin (){
-    let userJson = localStorage.getItem("user");
+    let userJson = localStorage.getItem("user") || null;
+
+    if (userJson === null){
+        alert("Please register first");
+        return;
+    }
+
     let userObject = JSON.parse(userJson);
     let user = userObject.name;
     let password = userObject.password;
