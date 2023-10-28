@@ -94,7 +94,7 @@ function onSubmit () {
     dm = returnDM();
     dm.messages.push(chat);
     dms.push(dm);
-    localStorage.setItem("privateMessages", JSON.stringify(dms));
+    localStorage.setItem("privateMessages", JSON.stringify(dm));
 }
 
 inputField.addEventListener("keypress", function (event) {
