@@ -71,4 +71,12 @@ Do you and your buddies want a place to talk after school, and don't know where 
 -Application text content - Consistent fonts
 -Application images - I have images in the groups page
 
+## JavaScript Deliverable
+
+### This deliverable will show my knowledge of java script
+- I have java script login support
+- I have java script support for databases via group creation. Also chats for groups save
+- I have java script web socket support that will be used in the chat page
+- The application has the full java script interactions.
+
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
