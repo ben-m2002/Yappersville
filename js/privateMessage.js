@@ -82,8 +82,6 @@ function onSubmit () {
 
     // Now we save it to local storage
 
-    let currentGroup = returnCurrentGroup();
-
     let chat = {
         author : author,
         time : 0,
@@ -91,10 +89,12 @@ function onSubmit () {
     }
 
     // save the chats
-    dm = returnDM();
+    let dm = returnDM();
     dm.messages.push(chat);
-    dms.push(dm);
-    localStorage.setItem("privateMessages", JSON.stringify(dm));
+    let dmsObject = JSON.parse(dms);
+    console.log(dmsObject);
+    dmsObject.push(dm);
+    localStorage.setItem("privateMessages", JSON.stringify(dmsObject));
 }
 
 inputField.addEventListener("keypress", function (event) {

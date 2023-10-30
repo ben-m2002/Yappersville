@@ -37,6 +37,7 @@ function setUpUsers (currentGroup){
                 };
             }
 
+            console.log(dms)
 
             userObject.currentDM = dmID
             localStorage.setItem("privateMessages", JSON.stringify(dms));
