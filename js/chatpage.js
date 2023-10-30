@@ -28,12 +28,13 @@ function setUpUsers (currentGroup){
 
             // check if dm exists, if not create it
 
-            let dms =  localStorage.getItem("privateMessages") || {};
+            let dms = JSON.parse(localStorage.getItem("privateMessages")) || {};
 
             if (dms[dmID] === undefined){
                 dms[dmID] = {
                     members : [userObject.name, member],
-                    messages : []
+                    messages : [],
+                    id : dmID,
                 };
             }
 

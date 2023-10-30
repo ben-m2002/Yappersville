@@ -92,8 +92,9 @@ function onSubmit () {
     let dm = returnDM();
     dm.messages.push(chat);
     let dmsObject = JSON.parse(dms);
-    console.log(dmsObject);
-    dmsObject.push(dm);
+    //const id = dm.id
+    delete dmsObject[dm.id]
+    dmsObject[dm.id] = dm;
     localStorage.setItem("privateMessages", JSON.stringify(dmsObject));
 }
 
