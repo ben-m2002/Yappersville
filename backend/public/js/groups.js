@@ -59,7 +59,7 @@ function getRawImage (event){
 }
 
 
-function onCreate (){
+function onCreate (){ // work on putting groups in the back end
     let userJson = localStorage.getItem("user");
     let userObject = JSON.parse(userJson);
 
