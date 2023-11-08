@@ -68,13 +68,37 @@ apiRouter.get("/groups", (req, res) => {
     res.status(200).send(groups);
 });
 
-apiRouter.get("/userGroups", (req, res) => {
+apiRouter.get("findGroup", (req, res) => {
+    const id = req.query.id;
+    if (id in groups){
+        res.status(200).send(groups[id]);
+    }
+    else {
+        res.status(400).send("Group not found");
+    }
+});
 
+apiRouter.get("/userGroups", (req, res) => {
+    const userName = req.query.name;
+    let user = users[userName];
+    let groupIds = user.groups;
+    let userGroups = [];
+    for (let id of groupIds){
+        userGroups.push(groups[id]);
+    }
+    res.status(200).send(userGroups);
 });
 
 apiRouter.post("/updateGroup", (req, res) => {
-
+    const group = req.body;
+    if (!group.id in groups){
+        res.status(400).send("Group not found");
+        return;
+    }
+    groups[group.id] = group;
+    res.status(200).send("Success");
 });
+
 
 app.use ((req, res) => {
     res.sendFile('index.html', { root: 'public' });

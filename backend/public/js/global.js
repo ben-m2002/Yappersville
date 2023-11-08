@@ -30,3 +30,22 @@ function hashString(str) {
     return shaObj.getHash("HEX");
 }
 
+async function updateUser (userObject){
+    return await fetch("/api/updateUser", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userObject),
+    })
+}
+
+async function updateGroup (group){
+    return await fetch("/api/updateGroup", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(group),
+    })
+}

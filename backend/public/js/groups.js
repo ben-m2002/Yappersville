@@ -122,13 +122,7 @@ async function onCreate (){
 
             // update the user object on server, async
 
-            let response = await fetch("/api/updateUser", {
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json'
-                },
-                body : JSON.stringify(userObject),
-            });
+            let response = await updateUser(userObject);
 
             if (response.status === 200){
                 window.location.href = "chatpage.html";
@@ -147,10 +141,16 @@ async function onCreate (){
 
 }
 
-function onJoin (){
+async function onJoin (){
     const user = localStorage.getItem("user");
     let userObject = JSON.parse(user);
     const groupId = join_text.value;
+
+    // make sure the userObject exists
+    if (userObject === null){
+        alert("Please login or register");
+        return;
+    }
 
     // make sure the group id is valid
     if (groupId === "" || checkForWhiteSpace(groupId)){
@@ -158,14 +158,30 @@ function onJoin (){
         return;
     }
 
-    // look for the group in the local storage
+    // look for the group on the server
 
-    let allGroups = JSON.parse(localStorage.getItem("groups")) || [];
     let joinedGroup = null;
-    for (let group of allGroups){
-        if (group.id === groupId){
-            joinedGroup = group;
+
+    try{
+        const params = new URLSearchParams({
+           id : groupId,
+        });
+        let response = await fetch(`/api/findGroup?${params.toString()}`, {
+            method : "Get",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+        });
+        if (response.status === 200){
+            joinedGroup = await response.json();
         }
+        else{
+            alert("Error finding group");
+            return;
+        }
+    }catch (e){
+        alert(e);
+        return;
     }
 
     // alert user if group doesnt exit
@@ -175,27 +191,51 @@ function onJoin (){
         return;
     }
 
-    // add the user to the group
-
+    // update values
     joinedGroup.members.push(userObject.name);
-
-    // add the group to the users groups
-
     userObject.groups.push(joinedGroup.id);
     userObject.currentGroup = joinedGroup.id;
 
+    // update the server
+    let response = await updateUser(userObject);
+    let response2 = await updateGroup(joinedGroup);
+
+    if (response.status === 200 && response2.status === 200){
+        window.location.href = "chatpage.html";
+    }
+    else{
+        alert("Error updating user or group")
+    }
     // update the local storage
-
     localStorage.setItem("user", JSON.stringify(userObject));
-    localStorage.setItem("groups", JSON.stringify(allGroups));
-
-    // in the future we will have a store for the users current group
-    window.location.href = "chatpage.html";
 }
 
-function populateGroups (){
-    let allGroups = JSON.parse(localStorage.getItem("groups"));
+async function populateGroups (){
     let userObject = JSON.parse(localStorage.getItem("user"));
+    if (userObject == null){
+        alert("Go login or register");
+        return
+    }
+    let allGroups = null
+
+    try{
+        let response = await fetch("/api/userGroups?name=" + userObject.name, {
+            method : "Get",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+        });
+        if (response.status === 200){
+            allGroups = await response.json();
+        }
+        else{
+            alert("Error finding the users groups");
+            return;
+        }
+    }catch (e){
+        alert(e);
+        return;
+    }
     for (let group of allGroups){
         for (let member of group.members){
             if (member === userObject.name){
@@ -206,4 +246,4 @@ function populateGroups (){
 }
 
 image_label.addEventListener('change', getRawImage);
-populateGroups();
+await populateGroups();
