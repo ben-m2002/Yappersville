@@ -59,7 +59,7 @@ function getRawImage (event){
 }
 
 
-function onCreate (){ // work on putting groups in the back end
+async function onCreate (){
     let userJson = localStorage.getItem("user");
     let userObject = JSON.parse(userJson);
 
@@ -74,6 +74,13 @@ function onCreate (){ // work on putting groups in the back end
 
     if (imageData === null){
         alert("Please upload an image for the group");
+    }
+
+    // make sure the userObject exists
+
+    if (userObject === null){
+        alert("Please login or register");
+        return;
     }
 
     let group = {
@@ -94,24 +101,50 @@ function onCreate (){ // work on putting groups in the back end
 
     }
 
-    let allGroups = JSON.parse(localStorage.getItem("groups")) || [];
-    allGroups.push(group);
-    localStorage.setItem("groups", JSON.stringify(allGroups));
+    // were going to send a group object to the server
+    // and were not going to work with all groups in the local storage, just the designated one
 
-    // We are going to add this group to the users groups here
+    try{
+        let response = fetch("/api/createGroup", {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify(group),
+        });
 
-    // in the future we will use a join so that if it updates in one place it updates in all places (groups)
+        if (response.status === 200){
+            // update the user object on client
+            userObject.groups.push(group.id);
+            userObject.currentGroup = group.id;
+            localStorage.setItem("user", JSON.stringify(userObject));
+            localStorage.setItem("currentGroup", JSON.stringify(group));
 
-    // in the future we will use a join so that if it updates in one place it updates in all places (user)
+            // update the user object on server, async
 
-    userObject.groups.push(group.id);
-    userObject.currentGroup = group.id;
-    localStorage.setItem("user", JSON.stringify(userObject));
+            let response = await fetch("/api/updateUser", {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(userObject),
+            });
 
-    console.log("Group created");
+            if (response.status === 200){
+                window.location.href = "chatpage.html";
+                console.log("user updated and group created")
+            }
+            else{
+                alert("Error updating user, make sure you're logged in");
+            }
+        }
+        else{
+            alert("Error creating group");
+        }
+    }catch (e){
+        alert(e);
+    }
 
-    // in the future we will have a store for the users current group
-    window.location.href = "chatpage.html";
 }
 
 function onJoin (){
