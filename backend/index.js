@@ -8,8 +8,23 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
+// aws stuff
+
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+   region : "us-west-1",
+   accessKeyId  : "AKIA2CM2VCAJ7RC3D4FC",
+    secretAccessKey : "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",
+});
+
+
+const multer = require('multer');
+const upload = multer({storage : multer.memoryStorage()});
+
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
+
 
 users = {}; // were going to use an object here
 groups = {}; // were going to use an object here
@@ -53,15 +68,39 @@ apiRouter.post("/updateUser", (req, res) => {
 });
 
 
-apiRouter.post("/createGroup", (req, res) => {
-    const group = req.body;
-    // let's have a check that no groupID are the same
-    if (group.id in groups){
-        res.status(400).send("Error refresh page and recreate group");
-        return;
-    }
-    groups[group.id] = group
-    res.status(200).send("Success");
+apiRouter.post("/createGroup", upload.single('profilePic'), (req, res) => {
+    const group = JSON.parse(req.body.group);
+    const file = req.file
+
+    let s3bucket = new AWS.S3({
+        params: {
+            Bucket: 'groupimagebucket',
+        }
+    });
+
+    let params = {
+       Bucket : "groupimagebucket",
+       Key : file.originalname,
+       Body : file.buffer,
+        ContentType : file.mimetype,
+        ACL : "public-read",
+    };
+
+    s3bucket.upload(params, (err, data) => {
+       if (err){
+           res.status(500).json({error : true, Message : err});
+       }
+       else{
+           group.profilePic = data.Location;
+           if (group.id in groups){
+                res.status(400).send("Error refresh page and recreate group");
+                return;
+            }
+           groups[group.id] = group
+           res.status(200).send(data);
+       }
+    });
+
 });
 
 apiRouter.get("/groups", (req, res) => {

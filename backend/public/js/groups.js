@@ -88,7 +88,7 @@ async function onCreate (){
         groupName : groupName,
         creator : userObject.name, // in the future we will use a join so that if it updates in one place it updates in all places
         dateCreated : Date.now(),
-        profilePic : imageData,
+        profilePic : "", // This will be s3 url
         allChats : [
             {
                 author : "Admin",
@@ -98,19 +98,19 @@ async function onCreate (){
         ],
         members : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
         admins : [userObject.name], // in the future we will use a join so that if it updates in one place it updates in all places
-
     }
 
     // were going to send a group object to the server
     // and were not going to work with all groups in the local storage, just the designated one
 
     try{
-        let response = fetch("/api/createGroup", {
-            method : 'POST',
-            headers : {
-                'Content-Type' : 'application/json'
-            },
-            body : JSON.stringify(group),
+        const formData = new FormData();
+        formData.append("profilePic", imageData);
+        formData.append('group', JSON.stringify(group));
+
+        let response = await fetch("/api/createGroup", {
+            method : "POST",
+            body : formData,
         });
 
         if (response.status === 200){
@@ -125,6 +125,7 @@ async function onCreate (){
             let response = await updateUser(userObject);
 
             if (response.status === 200){
+                group.profilePic = await response.Location;
                 window.location.href = "chatpage.html";
                 console.log("user updated and group created")
             }
@@ -246,4 +247,4 @@ async function populateGroups (){
 }
 
 image_label.addEventListener('change', getRawImage);
-await populateGroups();
+populateGroups();
