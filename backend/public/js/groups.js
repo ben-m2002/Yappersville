@@ -43,17 +43,10 @@ function createGroupButtonElement (name, image, altText, id){
 
 function getRawImage (event){
     const file = event.target.files[0];
-    const reader = new FileReader();
     if (file && file.type.startsWith('image/')) {
-        reader.onload = function () {
-            imageData = reader.result
-        };
-        reader.onerror = function () {
-            alert("Error reading file");
-        }
-        reader.readAsDataURL(file); // this is called first, then the onload function is called
+        imageData = file; // 'imageData' should be a global variable
     }
-    else{
+    else {
         alert("Please upload an image file");
     }
 }
@@ -114,6 +107,9 @@ async function onCreate (){
         });
 
         if (response.status === 200){
+            // update image
+            let data = await response.json();
+            group.profilePic = data.imageURL;
             // update the user object on client
             userObject.groups.push(group.id);
             userObject.currentGroup = group.id;
@@ -122,10 +118,9 @@ async function onCreate (){
 
             // update the user object on server, async
 
-            let response = await updateUser(userObject);
+            let response2 = await updateUser(userObject);
 
-            if (response.status === 200){
-                group.profilePic = await response.Location;
+            if (response2.status === 200){
                 window.location.href = "chatpage.html";
                 console.log("user updated and group created")
             }

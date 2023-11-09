@@ -1,5 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
+
 
 
 const port = process.argv > 2 ? process.argv[2] : 3000;
@@ -10,15 +12,26 @@ app.use(express.static('public'));
 
 // aws stuff
 
-const AWS = require('aws-sdk');
+const {S3Client, PutObjectCommand}= require('@aws-sdk/client-s3');
+const {Upload} = require("@aws-sdk/lib-storage");
 
-AWS.config.update({
-   region : "us-west-3",
+const s3Client = new S3Client({
+   region : "us-west-1",
+   accessKeyId  : process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY,
 });
+
+const region = "us-west-1";
 
 
 const multer = require('multer');
-const upload = multer({storage : multer.memoryStorage()});
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fieldNameSize: 100, // Max field name size in bytes
+    fieldSize: 1024 * 1024 * 2, // Max field value size in bytes (here set to 2MB)
+  },
+});
 
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
@@ -66,39 +79,31 @@ apiRouter.post("/updateUser", (req, res) => {
 });
 
 
-apiRouter.post("/createGroup", upload.single('profilePic'), (req, res) => {
+apiRouter.post("/createGroup", upload.single('profilePic'), async (req, res) => {
     const group = JSON.parse(req.body.group);
     const file = req.file
 
-    let s3bucket = new AWS.S3({
-        params: {
-            Bucket: 'groupimagebucket',
-        }
-    });
-
-    let params = {
-       Bucket : "groupimagebucket",
-       Key : file.originalname,
-       Body : file.buffer,
-        ContentType : file.mimetype,
-        ACL : "public-read",
+    let uploadParams = {
+        Bucket: "groupimagebucket",
+        Key: file.originalname,
+        Body: file.buffer,
     };
 
-    s3bucket.upload(params, (err, data) => {
-       if (err){
-           res.status(500).json({error : true, Message : err});
-       }
-       else{
-           group.profilePic = data.Location;
-           if (group.id in groups){
-                res.status(400).send("Error refresh page and recreate group");
-                return;
-            }
-           groups[group.id] = group
-           res.status(200).send(data);
-       }
-    });
-
+    try {
+        const command = new PutObjectCommand(uploadParams);
+        const uploadResult = await s3Client.send(command);
+        group.profilePic = `https://${uploadParams.Bucket}.s3.${region}.amazonaws.com/${uploadParams.Key}`;
+        if (group.id in groups) {
+            res.status(400).send("Error refresh page and recreate group");
+            return;
+        }
+        groups[group.id] = group
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json({ message: "Success", imageURL: group.profilePic });
+    } catch (e) {
+        console.log("Error uploading to S3", e);
+        res.status(500).send("Error uploading to S3 " + e);
+    }
 });
 
 apiRouter.get("/groups", (req, res) => {
@@ -120,6 +125,7 @@ apiRouter.get("/userGroups", (req, res) => {
     let user = users[userName];
     let groupIds = user.groups;
     let userGroups = [];
+    console.log(groups)
     for (let id of groupIds){
         userGroups.push(groups[id]);
     }
