@@ -1,10 +1,21 @@
 let user = localStorage.getItem("user");
+let currentGroup = null;
 const usersDiv = document.querySelector("#allUsers");
 const ChatText = document.querySelector("#chatTitle");
 const userTextBox = document.querySelector("#chatbox");
 const userTextSubmit = document.querySelector("#userSubmitButton");
 const chatFrame = document.querySelector("#chatFrame");
 const allGroups = JSON.parse(localStorage.getItem("groups"));
+
+
+async function initialize(){
+    // optimization tip in the future, get all the users and hit the server and get all possible dms that can come from this server
+    await updateCurrentGroup();
+    setUpPage();
+}
+
+initialize();
+
 
 function setUpUsers (currentGroup){
     // get the users
@@ -20,7 +31,7 @@ function setUpUsers (currentGroup){
         button.className = "userBoxButton";
         button.textContent = member;
 
-        button.onclick = function (){
+        button.onclick = async function () {
             let userObject = JSON.parse(user);
             let namesArray = [userObject.name, member];
             let sortedNamesString = namesArray.sort().join('');
@@ -28,21 +39,55 @@ function setUpUsers (currentGroup){
 
             // check if dm exists, if not create it
 
-            let dms = JSON.parse(localStorage.getItem("privateMessages")) || {};
+            let DM = null
 
-            if (dms[dmID] === undefined){
-                dms[dmID] = {
-                    members : [userObject.name, member],
-                    messages : [],
-                    id : dmID,
-                };
+            try {
+                let response = await fetch(`/api/findDM/${dmID}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (response.status === 200){
+                    DM = await response.json();
+                }
+            }catch (e){
+                alert(e);
+                return
             }
 
-            console.log(dms)
-
-            userObject.currentDM = dmID
-            localStorage.setItem("privateMessages", JSON.stringify(dms));
+            if (DM == null){
+                DM = {
+                    members: [userObject.name, member],
+                    messages: [],
+                    id: dmID,
+                }
+                // put dm on server
+                try {
+                    let response = await fetch("/api/create_dm", {
+                        method : "POST",
+                        headers : {
+                            "Content-Type": "application/json",
+                        },
+                        body : JSON.stringify(DM),
+                    });
+                    if (response.status === 200){
+                        console.log("DM created");
+                    }
+                    else{
+                        alert("Error creating DM");
+                        return;
+                    }
+                }catch (e){
+                    alert(e);
+                    return;
+                }
+            }
+            // make this persist on the server
+            userObject.currentDM = dmID;
             localStorage.setItem("user", JSON.stringify(userObject));
+            await updateUser(userObject); // server update
             window.location.href = "private.html";
         }
 
@@ -52,25 +97,33 @@ function setUpUsers (currentGroup){
 
 }
 
-function returnCurrentGroup (){
-    // get userObject
+async function updateCurrentGroup (){
+    let user = localStorage.getItem("user");
     const userObject = JSON.parse(user);
     const currentGroupID = userObject.currentGroup; // this is an ID
-    let currentGroup = null;
 
-    // get the group
-    for (let group of allGroups){
-        if (group.id === currentGroupID){
-            currentGroup = group;
+    try {
+        let response = await fetch(`/api/findGroup/${currentGroupID}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.status === 200) {
+            // continue
+            currentGroup = await response.json();
+        }
+        else{
+            alert("Error finding group");
         }
     }
-
-    return currentGroup
+    catch (e){
+        alert(e);
+    }
 }
 
 function setUpPage (){
-    let currentGroup = returnCurrentGroup();
-
     // set the title
 
     ChatText.textContent = currentGroup.groupName;
@@ -81,9 +134,7 @@ function setUpPage (){
 }
 
 function setUpChats (){
-    let currentGroup = returnCurrentGroup();
     let allChats = currentGroup.allChats;
-
     for (let chat of allChats){
         createTextBox(chatFrame,chat.author, chat.text);
     }
@@ -93,7 +144,7 @@ function setUpChats (){
 
 
 
-function onSubmit () {
+async function onSubmit () {
     let message = userTextBox.value;
 
     if (message === "" || checkForWhiteSpace(message)) {
@@ -104,11 +155,13 @@ function onSubmit () {
     let userObject = JSON.parse(user);
     let author = userObject.name;
 
+    // parse a message here because we can replace message with joke
+
+    message = await parseMessage(message);
+
     createTextBox(chatFrame, author, message)
 
     // Now we gotta save it
-
-    let currentGroup = returnCurrentGroup();
 
     let chat = {
         author : author,
@@ -116,11 +169,10 @@ function onSubmit () {
         text : message,
     }
 
-
-    // now we gotta save it to local storage
     currentGroup.allChats.push(chat);
-    localStorage.setItem("groups", JSON.stringify(allGroups));
+    // we have to update this group on the back end
 
+    updateGroup(currentGroup).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
 }
 
 userTextBox.addEventListener("keypress", function (event) {
@@ -131,4 +183,3 @@ userTextBox.addEventListener("keypress", function (event) {
 
 // maybe set up tell a Joke API
 
-setUpPage();

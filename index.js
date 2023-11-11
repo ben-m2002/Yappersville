@@ -41,6 +41,7 @@ app.use(`/api`, apiRouter);
 
 users = {}; // were going to use an object here
 groups = {}; // were going to use an object here
+dms = {}; // this stores a private message between two users
 
 // Login And Registering
 
@@ -112,8 +113,8 @@ apiRouter.get("/groups", (req, res) => {
     res.status(200).send(groups);
 });
 
-apiRouter.get("findGroup", (req, res) => {
-    const id = req.query.id;
+apiRouter.get("/findGroup/:id", (req, res) => {
+    const id = req.params.id;
     if (id in groups){
         res.status(200).send(groups[id]);
     }
@@ -144,6 +145,37 @@ apiRouter.post("/updateGroup", (req, res) => {
     res.status(200).send("Success");
 });
 
+apiRouter.post('/create_dm', (req, res) => {
+    // push the user to the users array
+    const dm = req.body
+    // make sure the user is unique
+    if (dm.id in dms){
+        res.status(400).send("DM already exists");
+        return;
+    }
+    dms[dm.id] = dm;
+    res.status(200).send("Success");
+});
+
+apiRouter.post("/updateDM", (req, res) => {
+    const dm = req.body;
+    if (!dm.id in dms){
+        res.status(400).send("DM not found");
+        return;
+    }
+    dms[dm.id] = dm;
+    res.status(200).send("Success");
+});
+
+apiRouter.get("/findDM/:id", (req, res) => {
+    const id = req.params.id;
+    if (id in dms){
+        res.status(200).send(dms[id]);
+    }
+    else {
+        res.status(400).send("DM not found");
+    }
+});
 
 app.use ((req, res) => {
     res.sendFile('index.html', { root: 'public' });

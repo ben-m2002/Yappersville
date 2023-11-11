@@ -2,19 +2,42 @@
 // that way the dms can be unique and stored
 
 let user = localStorage.getItem("user");
-let dms = localStorage.getItem("privateMessages");
-
 let usersDiv = document.querySelector("#allUsers");
 let chatTitle = document.querySelector("#chatTitle-private");
 let chatFrame = document.querySelector("#chatFrame-private");
 let inputField = document.querySelector("#chatbox-private");
+let dm = null;
 
+async function initialize (){
+    await updateCurrentDM();
+    setUpPage();
+}
 
-function returnDM (){
-    let userObject = JSON.parse(user);
-    let dMObject = JSON.parse(dms);
-    let dmID = userObject.currentDM;
-    return dMObject[dmID];
+initialize()
+
+async function updateCurrentDM (){
+    let user = localStorage.getItem("user");
+    const userObject = JSON.parse(user);
+    const dmID = userObject.currentDM; // this is an ID
+
+    try {
+        let response = await fetch(`/api/findDM/${dmID}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.status === 200) {
+            dm = await response.json();
+        }
+        else{
+            alert("Error finding DM");
+        }
+    }
+    catch (e){
+        alert(e);
+    }
 }
 
 
@@ -22,7 +45,6 @@ function returnDM (){
 
 function setUpUsers (){
     // get the users
-    let dm = returnDM();
     let userObject = JSON.parse(user);
     const members = dm.members
     // add the users to the page
@@ -42,7 +64,6 @@ function setUpUsers (){
 }
 
 function setMessages (){
-    let dm = returnDM();
     let messages = dm.messages;
     for (let message of messages){
         createTextBox(chatFrame, message.author, message.text);
@@ -51,9 +72,6 @@ function setMessages (){
 
 function setUpPage (){
     let userObject = JSON.parse(user);
-    let dMObject = JSON.parse(dms);
-    let dmID = userObject.currentDM;
-    let dm = dMObject[dmID];
     let members = dm.members;
     // set the title
     for (let member of members){
@@ -67,7 +85,7 @@ function setUpPage (){
     setMessages();
 }
 
-function onSubmit () {
+async function onSubmit () {
     let message = inputField.value;
 
     if (message === "" || checkForWhiteSpace(message)) {
@@ -77,6 +95,8 @@ function onSubmit () {
 
     let userObject = JSON.parse(user);
     let author = userObject.name;
+
+    message = await parseMessage(message);
 
     createTextBox(chatFrame, author, message);
 
@@ -89,13 +109,9 @@ function onSubmit () {
     }
 
     // save the chats
-    let dm = returnDM();
     dm.messages.push(chat);
-    let dmsObject = JSON.parse(dms);
     //const id = dm.id
-    delete dmsObject[dm.id]
-    dmsObject[dm.id] = dm;
-    localStorage.setItem("privateMessages", JSON.stringify(dmsObject));
+    updateDM(dm).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
 }
 
 inputField.addEventListener("keypress", function (event) {
@@ -103,6 +119,3 @@ inputField.addEventListener("keypress", function (event) {
         onSubmit();
     }
 })
-
-
-setUpPage();
