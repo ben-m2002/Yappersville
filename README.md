@@ -83,10 +83,10 @@ Do you and your buddies want a place to talk after school, and don't know where 
 
 ### This deliverable will show how I added services to my project
 - Node.js/Express HTTP service - done!
--Static middleware for frontend - done!
--Calls to third party endpoints - Entering /joke in the chat will hit a dad joke API
--Backend service endpoints - Every piece of data is backed up in back end, users, groups, dms
--Frontend calls service endpoints - Front end gets and sends data to the back end via api calls
+- Static middleware for frontend - done!
+- Calls to third party endpoints - Entering /joke in the chat will hit a dad joke API
+- Backend service endpoints - Every piece of data is backed up in back end, users, groups, dms
+- Frontend calls service endpoints - Front end gets and sends data to the back end via api calls
 
 
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
