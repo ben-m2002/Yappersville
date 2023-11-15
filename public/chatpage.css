@@ -34,7 +34,7 @@ main {
     display: flex;
     padding: 1em; /* some spacing around the main content */
     box-sizing: border-box;
-    margin-left: 15em;
+    margin-left: 14em;
 }
 
 main > div {

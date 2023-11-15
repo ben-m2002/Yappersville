@@ -159,10 +159,7 @@ async function onJoin (){
     let joinedGroup = null;
 
     try{
-        const params = new URLSearchParams({
-           id : groupId,
-        });
-        let response = await fetch(`/api/findGroup?${params.toString()}`, {
+        let response = await fetch(`/api/findGroup?${currentGroup.id}`, {
             method : "Get",
             headers : {
                 'Content-Type' : 'application/json'

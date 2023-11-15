@@ -123,20 +123,43 @@ async function updateCurrentGroup (){
     }
 }
 
-function setUpPage (){
+async function setUpPage (){
     // set the title
 
     ChatText.textContent = currentGroup.groupName;
 
     // were going to set up the users box
     setUpUsers(currentGroup);
-    setUpChats();
+    await setUpChats();
 }
 
-function setUpChats (){
-    let allChats = currentGroup.allChats;
-    for (let chat of allChats){
-        createTextBox(chatFrame,chat.author, chat.text);
+async function setUpChats (){
+    // clear the chat frame
+    let elements = chatFrame.getElementsByClassName("textfield")
+    while (elements[0]){
+        chatFrame.removeChild(elements[0]);
+    }
+    // update the chats
+    try{
+        let response = await fetch(`/api/findGroup/${currentGroup.id}`, {
+            method : "Get",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+        });
+        if (response.status === 200){
+            currentGroup = await response.json();
+            console.log(currentGroup)
+            let allChats = currentGroup.allChats;
+             for (let chat of allChats){
+                createTextBox(chatFrame,chat.author, chat.text);
+             }
+        }
+        else{
+            alert("Error finding group");
+        }
+    }catch (e){
+        alert(e);
     }
 }
 
@@ -169,10 +192,10 @@ async function onSubmit () {
         text : message,
     }
 
+    // updates
     currentGroup.allChats.push(chat);
-    // we have to update this group on the back end
-
     updateGroup(currentGroup).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
+    setUpChats();
 }
 
 userTextBox.addEventListener("keypress", function (event) {

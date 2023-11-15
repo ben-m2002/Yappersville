@@ -52,48 +52,29 @@ async function onRegister (){
 
 async function onLogin (){
     let userJson = localStorage.getItem("user") || null;
-
-    if (userJson != null){
-        let userObject = JSON.parse(userJson);
-        let user = userObject.name;
-        let password = userObject.password;
-
-        if (user === nameEl.value && password === passwordEl.value){
-            console.log("login successful");
+    const content = {
+        name : nameEl.value,
+        password : passwordEl.value,
+    }
+    try {
+       let response = await fetch("/api/findUser", {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify(content),
+        });
+        if (response.status === 200){
+            let user = await response.json();
+            localStorage.setItem("user", JSON.stringify(user));
             window.location.href = "groups.html";
         }
         else{
-             alert("Invalid username or password");
+            alert("Invalid username or password");
         }
     }
-    else{ // we will search in the database
-        const content = {
-            name : nameEl.value,
-            password : passwordEl.value,
-        }
-        try {
-           let response = await fetch("/api/users", {
-                method : 'POST',
-                headers : {
-                    'Content-Type' : 'application/json'
-                },
-                body : JSON.stringify(content),
-            });
-            if (response.status === 200){
-                let user = await response.json();
-                localStorage.setItem("user", JSON.stringify(user));
-                window.location.href = "groups.html";
-            }
-            else{
-                alert("Invalid username or password");
-            }
-        }
-        catch (e){
-            alert("Error connecting to the server");
-        }
+    catch (e){
+        alert("Error connecting to the server");
     }
-
-
-
 }
 
