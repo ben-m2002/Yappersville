@@ -69,6 +69,25 @@ async function updateGroup (db, group){
     await groups.updateOne(query, newVersion);
 }
 
+async function insertIntoDMs (db, dm){
+    const dms = db.collection("dms");
+    await dms.insertOne(dm);
+}
+
+async function findDM (db, dmID){
+    const dms = db.collection("dms");
+    const query = {id: dmID};
+    return await dms.findOne(query);
+}
+
+async function updateDM (db, dm){
+    const dms = db.collection("dms");
+    let updateDM = {...dm};
+    delete updateDM._id;
+    const query = { id: dm.id};
+    const newVersion = { $set: updateDM};
+    await dms.updateOne(query, newVersion);
+}
 
 module.exports =  {
     getClient,
@@ -80,5 +99,8 @@ module.exports =  {
     insertIntoGroups,
     findUserGroups,
     updateGroup,
+    insertIntoDMs,
+    findDM,
+    updateDM,
 }
 

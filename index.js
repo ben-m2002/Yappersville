@@ -139,36 +139,36 @@ apiRouter.post("/updateGroup", async (req, res) => {
     res.status(200).send("Success");
 });
 
-apiRouter.post('/create_dm', (req, res) => {
-    // push the user to the users array
+apiRouter.post('/create_dm', async (req, res) => {
     const dm = req.body
-    // make sure the user is unique
-    if (dm.id in dms){
+    const dmCollection = await database.findDM(db, dm.id)
+    if (dmCollection !== null) {
         res.status(400).send("DM already exists");
         return;
     }
-    dms[dm.id] = dm;
-    res.status(200).send("Success");
+    await database.insertIntoDMs(db, dm);
+    res.status(200).send("Success")
 });
 
-apiRouter.post("/updateDM", (req, res) => {
+apiRouter.post("/updateDM", async (req, res) => {
     const dm = req.body;
-    if (!dm.id in dms){
+    const dmCollection = await database.findDM(db,dm.id)
+    if (dmCollection === null){
         res.status(400).send("DM not found");
         return;
     }
-    dms[dm.id] = dm;
+    await database.updateDM(db, dm);
     res.status(200).send("Success");
 });
 
-apiRouter.get("/findDM/:id", (req, res) => {
+apiRouter.get("/findDM/:id", async (req, res) => {
     const id = req.params.id;
-    if (id in dms){
-        res.status(200).send(dms[id]);
-    }
-    else {
+    const dmCollection = await database.findDM(db, id);
+    if (dmCollection === null) {
         res.status(400).send("DM not found");
+        return;
     }
+    res.status(200).send(dmCollection);
 });
 
 app.use ((req, res) => {
