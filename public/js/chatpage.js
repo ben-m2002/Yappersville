@@ -136,6 +136,12 @@ async function setUpPage (){
 async function setUpChats (){
     // clear the chat frame
     let elements = chatFrame.getElementsByClassName("textfield")
+    let previousChats = null;
+
+    if (currentGroup !== null){
+        previousChats = currentGroup.allChats;
+    }
+
     while (elements[0]){
         chatFrame.removeChild(elements[0]);
     }
@@ -149,10 +155,9 @@ async function setUpChats (){
         });
         if (response.status === 200){
             currentGroup = await response.json();
-            console.log(currentGroup)
             let allChats = currentGroup.allChats;
              for (let chat of allChats){
-                createTextBox(chatFrame,chat.author, chat.text);
+                 createTextBox(chatFrame,chat.author, chat.text);
              }
         }
         else{
@@ -188,7 +193,7 @@ async function onSubmit () {
 
     let chat = {
         author : author,
-        time : 0,
+        time : Math.floor(Date.now() / 1000),
         text : message,
     }
 

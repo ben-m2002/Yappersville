@@ -27,7 +27,6 @@ async function updateCurrentDM (){
                 "Content-Type": "application/json",
             },
         });
-
         if (response.status === 200) {
             dm = await response.json();
         }
@@ -63,10 +62,34 @@ function setUpUsers (){
     }
 }
 
-function setMessages (){
-    let messages = dm.messages;
-    for (let message of messages){
-        createTextBox(chatFrame, message.author, message.text);
+
+async function setMessages (){
+    // clear the chat frame
+    // this needs to be updated, so it doesnt delete but adds
+    let elements = chatFrame.getElementsByClassName("textfield")
+    while (elements[0]){
+        chatFrame.removeChild(elements[0]);
+    }
+    // update the chats
+    try{
+        let response = await fetch(`/api/findDM/${dm.id}`, {
+            method : "Get",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+        });
+        if (response.status === 200){
+            dm = await response.json();
+            let allChats = dm.messages;
+             for (let chat of allChats){
+                createTextBox(chatFrame,chat.author, chat.text);
+             }
+        }
+        else{
+            alert("Error finding DM");
+        }
+    }catch (e){
+        alert(e);
     }
 }
 
@@ -104,7 +127,7 @@ async function onSubmit () {
 
     let chat = {
         author : author,
-        time : 0,
+        time : Math.floor(Date.now() / 1000),
         text : message,
     }
 
