@@ -18,6 +18,14 @@ initialize()
 async function updateCurrentDM (){
     let user = localStorage.getItem("user");
     const userObject = JSON.parse(user);
+
+    // check if there is a user
+    if (userObject == null){
+        alert("Go login or register");
+        window.location.href = "index.html";
+        return
+    }
+
     const dmID = userObject.currentDM; // this is an ID
 
     try {
@@ -95,6 +103,7 @@ async function setMessages (){
 
 function setUpPage (){
     let userObject = JSON.parse(user);
+
     let members = dm.members;
     // set the title
     for (let member of members){

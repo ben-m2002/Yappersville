@@ -100,6 +100,14 @@ function setUpUsers (currentGroup){
 async function updateCurrentGroup (){
     let user = localStorage.getItem("user");
     const userObject = JSON.parse(user);
+
+    // check if user exists
+     if (userObject == null){
+        alert("Go login or register");
+        window.location.href = "index.html";
+        return
+    }
+
     const currentGroupID = userObject.currentGroup; // this is an ID
 
     try {
@@ -124,8 +132,11 @@ async function updateCurrentGroup (){
 }
 
 async function setUpPage (){
-    // set the title
 
+    let userObject = JSON.parse(localStorage.getItem("user"));
+
+
+    // set the title
     ChatText.textContent = currentGroup.groupName;
 
     // were going to set up the users box
