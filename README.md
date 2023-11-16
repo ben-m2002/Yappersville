@@ -88,5 +88,12 @@ Do you and your buddies want a place to talk after school, and don't know where 
 - Backend service endpoints - Every piece of data is backed up in back end, users, groups, dms
 - Frontend calls service endpoints - Front end gets and sends data to the back end via api calls
 
+## Database Deliverable
+
+### This deliverable will show how I added a database to my project
+- Implemented Mongo DB Atlas
+- Provided back end endpoints for creating, finding, and editing users, groups, and dms
+- Those endpoints then store data in our mongodb database
+
 
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
