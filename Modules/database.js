@@ -25,6 +25,12 @@ async function getUser (db, username){
     return await users.findOne(query);
 }
 
+async function getUserByAuthToken (db, authToken){
+    const users = db.collection("users");
+    const query = {token: authToken};
+    return await users.findOne(query);
+}
+
 async function insertIntoUsers (db, user){
     const users = db.collection("users");
     await users.insertOne(user);
@@ -102,5 +108,6 @@ module.exports =  {
     insertIntoDMs,
     findDM,
     updateDM,
+    getUserByAuthToken,
 }
 

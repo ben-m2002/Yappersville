@@ -2,7 +2,10 @@
 
 require('dotenv').config();
 const uuid = require('uuid');
+const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
 const database = require('./Modules/database');
+const config = require("./config.json");
 const express = require('express');
 const app = express();
 let client = null;
@@ -19,6 +22,8 @@ const port = process.argv > 2 ? process.argv[2] : 4000;
 app.use(express.json());
 
 app.use(express.static('public'));
+
+app.use(cookieParser(config.COOKIES_SECRET_KEY));
 
 // aws stuff
 
@@ -52,25 +57,28 @@ dms = {}; // this stores a private message between two users
 
 apiRouter.post('/register', async (req, res) => {
     const content = req.body
-    let user = {
+    const passwordHash = await bcrypt.hash(content.password, 10);
+    const authToken = uuid.v4();
+    const user = {
         name : content.name,
-        password : content.password,
+        password : passwordHash,
         chats : {
             author: content.name,
         },
         role : "user",
-        token : uuid.v4,
+        token : authToken,
         groups : [],
         currentGroup : null, // current group the user has picked
         currentDM : null,
     }
-    const userInstance = await database.getUser( db, user.name);
+    const userInstance = await database.getUser(db, user.name);
     if (userInstance !== null) {
         res.status(400).send("User already exists");
         return;
     }
     await database.insertIntoUsers(db, user)
-    res.status(200).send("Success");
+    setAuthCookie(res, user.token);
+    res.status(200).send(user);
 });
 
 apiRouter.post("/findUser", async (req, res) => {
@@ -82,7 +90,24 @@ apiRouter.post("/findUser", async (req, res) => {
         res.status(400).send("User not found");
         return;
     }
+    const passwordMatch = await bcrypt.compare(password, userInstance.password);
+    if (!passwordMatch) {
+        res.status(400).send("Invalid password");
+        return;
+    }
+    setAuthCookie(res, userInstance.token);
     res.status(200).send(userInstance);
+});
+
+apiRouter.get("/findUserByToken", async (req, res) => {
+    const authToken = req.signedCookies["auth"];
+    const userCollection = await database.getUserByAuthToken(db, authToken);
+    console.log(userCollection);
+    if (userCollection === null) {
+        res.status(400).send("User not found");
+        return;
+    }
+    res.status(200).send(userCollection);
 });
 
 apiRouter.post("/updateUser", async(req, res) => {
@@ -187,6 +212,15 @@ apiRouter.get("/findDM/:id", async (req, res) => {
 app.use ((req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
+
+function setAuthCookie (res, token) {
+    res.cookie('auth', token, {
+        maxAge: 3600000,
+        httpOnly: true,
+        sameSite: true,
+        signed: true,
+    });
+}
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
