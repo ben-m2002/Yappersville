@@ -95,5 +95,12 @@ Do you and your buddies want a place to talk after school, and don't know where 
 - Provided back end endpoints for creating, finding, and editing users, groups, and dms
 - Those endpoints then store data in our mongodb database
 
+## Login Deliverable
+
+### This deliverable delivers secure login and authentication for users
+- Supports regesitering new users
+- Supports authentication for new users
+- stores user credentials in database
+- user is not able to use groups without authentication
 
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
