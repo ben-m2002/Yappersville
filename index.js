@@ -1,6 +1,7 @@
 //-k "/Users/benmaduabuchi/Documents/cs260.pem" -h "yappersville.click" -s "startup"
 
 require('dotenv').config();
+const uuid = require('uuid');
 const database = require('./Modules/database');
 const express = require('express');
 const app = express();
@@ -50,7 +51,19 @@ dms = {}; // this stores a private message between two users
 
 
 apiRouter.post('/register', async (req, res) => {
-    const user = req.body
+    const content = req.body
+    let user = {
+        name : content.name,
+        password : content.password,
+        chats : {
+            author: content.name,
+        },
+        role : "user",
+        token : uuid.v4,
+        groups : [],
+        currentGroup : null, // current group the user has picked
+        currentDM : null,
+    }
     const userInstance = await database.getUser( db, user.name);
     if (userInstance !== null) {
         res.status(400).send("User already exists");

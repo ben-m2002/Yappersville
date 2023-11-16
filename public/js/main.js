@@ -7,26 +7,18 @@ async function onRegister (){
         alert("Please enter a username and password");
         return;
     }
-    let user = {
+    // send this data to the server
+    let content = {
         name : nameEl.value,
         password : passwordEl.value,
-        chats : {
-            author: nameEl.value,
-        },
-        groups : [],
-        currentGroup : null, // current group the user has picked
-        currentDM : null,
     }
-
-    // send this data to the server
-
     try{
         let response = await fetch("/api/register", {
         method : 'POST',
         headers : {
             'Content-Type' : 'application/json'
         },
-        body : JSON.stringify(user),
+        body : JSON.stringify(content),
          });
          // check the response
 
