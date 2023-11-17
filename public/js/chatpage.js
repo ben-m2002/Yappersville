@@ -6,96 +6,15 @@ const userTextBox = document.querySelector("#chatbox");
 const userTextSubmit = document.querySelector("#userSubmitButton");
 const chatFrame = document.querySelector("#chatFrame");
 const allGroups = JSON.parse(localStorage.getItem("groups"));
-
+const DMSDiv = document.querySelector("#allDMS");
 
 async function initialize(){
     // optimization tip in the future, get all the users and hit the server and get all possible dms that can come from this server
     await updateCurrentGroup();
-    setUpPage();
+    await setUpPage();
 }
 
 initialize();
-
-
-function setUpUsers (currentGroup){
-    // get the users
-    const members = currentGroup.members;
-
-    // add the users to the page
-
-    for (let member of members){
-        let userDiv = document.createElement("div");
-        userDiv.className = "userBox";
-
-        let button = document.createElement("button");
-        button.className = "userBoxButton";
-        button.textContent = member;
-
-        button.onclick = async function () {
-            let userObject = JSON.parse(user);
-            let namesArray = [userObject.name, member];
-            let sortedNamesString = namesArray.sort().join('');
-            let dmID = hashString(sortedNamesString);
-
-            // check if dm exists, if not create it
-
-            let DM = null
-
-            try {
-                let response = await fetch(`/api/findDM/${dmID}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-
-                if (response.status === 200){
-                    DM = await response.json();
-                }
-            }catch (e){
-                alert(e);
-                return
-            }
-
-            if (DM == null){
-                DM = {
-                    members: [userObject.name, member],
-                    messages: [],
-                    id: dmID,
-                }
-                // put dm on server
-                try {
-                    let response = await fetch("/api/create_dm", {
-                        method : "POST",
-                        headers : {
-                            "Content-Type": "application/json",
-                        },
-                        body : JSON.stringify(DM),
-                    });
-                    if (response.status === 200){
-                        console.log("DM created");
-                    }
-                    else{
-                        alert("Error creating DM");
-                        return;
-                    }
-                }catch (e){
-                    alert(e);
-                    return;
-                }
-            }
-            // make this persist on the server
-            userObject.currentDM = dmID;
-            localStorage.setItem("user", JSON.stringify(userObject));
-            await updateUser(userObject); // server update
-            window.location.href = "private.html";
-        }
-
-        userDiv.appendChild(button);
-        usersDiv.appendChild(userDiv);
-    }
-
-}
 
 async function updateCurrentGroup (){
     let user = localStorage.getItem("user");
@@ -131,17 +50,13 @@ async function updateCurrentGroup (){
     }
 }
 
-async function setUpPage (){
-
-    let userObject = JSON.parse(localStorage.getItem("user"));
 
 
-    // set the title
-    ChatText.textContent = currentGroup.groupName;
-
-    // were going to set up the users box
-    setUpUsers(currentGroup);
-    await setUpChats();
+function setUpUsers (currentGroup){
+    // get the users
+    const members = currentGroup.members;
+    // add the users to the page
+    displayMembers(members, usersDiv);
 }
 
 async function setUpChats (){
@@ -167,7 +82,7 @@ async function setUpChats (){
         if (response.status === 200){
             currentGroup = await response.json();
             let allChats = currentGroup.allChats;
-             for (let chat of allChats){
+                for (let chat of allChats){
                  createTextBox(chatFrame,chat.author, chat.text);
              }
         }
@@ -179,9 +94,53 @@ async function setUpChats (){
     }
 }
 
-// next we will create the chat function
+
+async function setUpOpenDMs (){
+    const user = localStorage.getItem("user");
+    const userObject = JSON.parse(user);
+    // userObject has to exist by now
+    try{
+        let response = await fetch(`/api/getUserDMS/${userObject.name}`, {
+            method : "Get",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+        });
+        if (response.status === 200){
+            const openDMS = await response.json();
+            console.log(openDMS)
+            let members = []
+            for (let dm of openDMS){
+                let names = dm.members;
+                for (let name of names){
+                    if (name === userObject.name){
+                        members.push(name);
+                    }
+                }
+            }
+            displayMembers(members, DMSDiv);
+        }
+        else{
+           console.log("User has no open dms")
+        }
+    }
+    catch (e){
+        alert(e)
+    }
+}
 
 
+async function setUpPage (){
+    let userObject = JSON.parse(localStorage.getItem("user"));
+
+    // set the title
+    ChatText.textContent = currentGroup.groupName;
+
+    // were going to set up the users box
+    setUpUsers(currentGroup);
+    await setUpChats();
+    await setUpOpenDMs()
+}
 
 async function onSubmit () {
     let message = userTextBox.value;

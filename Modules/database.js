@@ -95,6 +95,12 @@ async function updateDM (db, dm){
     await dms.updateOne(query, newVersion);
 }
 
+async function findUserDMS (db, username){
+    const dms = db.collection("dms");
+    const query = {members: {$in : [username]}};
+    return await dms.find(query).toArray();
+}
+
 module.exports =  {
     getClient,
     getDB,
@@ -109,5 +115,6 @@ module.exports =  {
     findDM,
     updateDM,
     getUserByAuthToken,
+    findUserDMS,
 }
 

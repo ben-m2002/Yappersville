@@ -52,8 +52,6 @@ const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
-dms = {}; // this stores a private message between two users
-
 
 apiRouter.post('/register', async (req, res) => {
     const content = req.body
@@ -102,7 +100,6 @@ apiRouter.post("/findUser", async (req, res) => {
 apiRouter.get("/findUserByToken", async (req, res) => {
     const authToken = req.signedCookies["auth"];
     const userCollection = await database.getUserByAuthToken(db, authToken);
-    console.log(userCollection);
     if (userCollection === null) {
         res.status(400).send("User not found");
         return;
@@ -207,6 +204,16 @@ apiRouter.get("/findDM/:id", async (req, res) => {
         return;
     }
     res.status(200).send(dmCollection);
+});
+
+apiRouter.get("/getUserDMS/:userName", async (req, res) => {
+    const userName = req.params.userName;
+    const userDMs = await database.findUserDMS(db, userName);
+    if (userDMs === null) {
+        res.status(400).send("User has no dms");
+        return;
+    }
+    res.status(200).send(userDMs);
 });
 
 app.use ((req, res) => {

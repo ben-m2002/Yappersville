@@ -5,7 +5,6 @@ const passwordEl = document.querySelector('#password');
 async function getMe (){
     // find the most recent user on the cookie, log them in if they exist
     // and redirect to the groups page
-    localStorage.clear()
     try{
         let response = await fetch("/api/findUserByToken", {
             method : 'GET',
