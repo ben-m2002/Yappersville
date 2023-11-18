@@ -113,7 +113,7 @@ async function setUpOpenDMs (){
             for (let dm of openDMS){
                 let names = dm.members;
                 for (let name of names){
-                    if (name === userObject.name){
+                    if (name !== userObject.name){
                         members.push(name);
                     }
                 }
