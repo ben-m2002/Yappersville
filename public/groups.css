@@ -71,8 +71,17 @@ li {
 
 
 footer {
-    display: flex;
+  display: flex;
+  gap: 10px; /* Adjust this value as needed */
   flex: 0 0 30px;
-  padding: 10px 0;
-    max-height: 30px;
+  padding: 0px 40px;
+  max-height: 30px;
+}
+
+footer #logout {
+    text-align: start;
+    color: white;
+    background: transparent;
+    border : none;
+    margin-bottom: 10px;
 }

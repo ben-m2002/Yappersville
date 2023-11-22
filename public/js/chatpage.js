@@ -170,7 +170,10 @@ async function onSubmit () {
     // updates
     currentGroup.allChats.push(chat);
     updateGroup(currentGroup).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
-    setUpChats();
+    await setUpChats();
+
+    // clear the text box
+    userTextBox.value = "";
 }
 
 userTextBox.addEventListener("keypress", function (event) {
@@ -179,5 +182,4 @@ userTextBox.addEventListener("keypress", function (event) {
     }
 })
 
-// maybe set up tell a Joke API
 

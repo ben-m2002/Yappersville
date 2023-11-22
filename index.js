@@ -1,5 +1,11 @@
 //-k "/Users/benmaduabuchi/Documents/cs260.pem" -h "yappersville.click" -s "startup"
 
+// Todo
+// 1. Add a way to log out
+// 2  Add disabling to buttons
+// 3. Add a way to delete a group
+// 4. Add a way to delete a DM
+
 require('dotenv').config();
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
@@ -116,6 +122,11 @@ apiRouter.post("/updateUser", async(req, res) => {
     }
     await database.updateUser(db, user);
     res.status(200).send("Success");
+});
+
+apiRouter.get("/logout", async (req, res) => {
+    res.cookie('auth', '', { expires: new Date(0), signed: true });
+    res.status(200).send('Signed cookie deleted');
 });
 
 

@@ -1,3 +1,5 @@
+logoutButton = document.getElementById("logout");
+
 
 function checkForWhiteSpace (s){
     let re = /^\s+$/;
@@ -160,3 +162,24 @@ function displayMembers (members, usersDiv){
         usersDiv.appendChild(userDiv);
     }
 }
+
+
+async function logout (){
+    try {
+        const response = await fetch("/api/logout", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.status === 200){
+            localStorage.clear()
+            window.location.href = "index.html";
+        }
+    }
+    catch (e){
+        alert(e);
+    }
+}
+
+logoutButton.addEventListener("click", logout);
