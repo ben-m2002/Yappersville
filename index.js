@@ -40,8 +40,8 @@ app.use(cookieParser(config.COOKIES_SECRET_KEY));
 const http = require('http')
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-const IO_SOCKET = require("./Modules/Socket")(io);
-IO_SOCKET(io);
+let IO_SOCKET = require("./Modules/Socket.js");
+IO_SOCKET(io, db);
 
 // aws stuff
 

@@ -146,8 +146,8 @@ async function onSubmit () {
     updateDM(dm).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
 }
 
-const debounceOnEnter = debounce(onEnter, 500);
+//const debounceOnEnter = debounce(onEnter, 500);
 const debounceOnClick = debounce(onSubmit, 500);
 
-inputField.addEventListener("keypress", debounceOnEnter);
+//inputField.addEventListener("keypress", debounceOnEnter);
 sumbitButton.addEventListener("click", debounceOnClick);

@@ -197,4 +197,4 @@ async function logout (){
 }
 
 logoutButton.addEventListener("click", logout);
-logout.style.color = "red";
+logoutButton.style.color = "red";

@@ -179,7 +179,7 @@ async function onSubmit () {
     // updates
     currentGroup.allChats.push(chat);
     updateGroup(currentGroup).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
-    socket.emit('message', {room: currentGroup.id, text: chat, author : userObject.name})
+    socket.emit('chat message', {room: currentGroup.id, author : chat.author, text : chat.text});
 
     // clear the text box
     userTextBox.value = "";
@@ -195,10 +195,10 @@ socket.on("chat message", (msg) => {
     createTextBox(chatFrame, msg.author, msg.text);
 });
 
-const debounceOnEnter = debounce(onEnter, 500);
+//const debounceOnEnter = debounce(onEnter(), 500);
 const debounceOnClick = debounce(onSubmit, 500);
 
-userTextBox.addEventListener("keypress", debounceOnEnter);
+//userTextBox.addEventListener("keypress", debounceOnEnter);
 userTextSubmit.addEventListener("click", debounceOnClick);
 
 
