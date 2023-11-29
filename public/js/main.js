@@ -1,5 +1,7 @@
 const nameEl = document.querySelector('#name');
 const passwordEl = document.querySelector('#password');
+const registerButton = document.querySelector('#RegisterButton');
+const loginButton = document.querySelector('#LoginButton');
 
 
 async function getMe (){
@@ -36,6 +38,7 @@ async function onRegister (){
         password : passwordEl.value,
     }
     try{
+        registerButton.disabled = true;
         let response = await fetch("/api/register", {
         method : 'POST',
         headers : {
@@ -62,7 +65,8 @@ async function onRegister (){
     } catch {
         // error connecting to the server
         alert("Error connecting to the server");
-
+    } finally {
+        registerButton.disabled = false;
     }
 }
 
@@ -73,6 +77,7 @@ async function onLogin (){
         password : passwordEl.value,
     }
     try {
+        loginButton.disabled = true;
        let response = await fetch("/api/findUser", {
             method : 'POST',
             headers : {
@@ -91,6 +96,8 @@ async function onLogin (){
     }
     catch (e){
         alert("Error connecting to the server");
+    } finally {
+        loginButton.disabled = false;
     }
 }
 

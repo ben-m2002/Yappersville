@@ -1,10 +1,15 @@
 //-k "/Users/benmaduabuchi/Documents/cs260.pem" -h "yappersville.click" -s "startup"
 
 // Todo
-// 1. Add a way to log out
-// 2  Add disabling to buttons
-// 3. Add a way to delete a group
-// 4. Add a way to delete a DM
+// 1  Add disabling to buttons
+// 2  Add way to make group ID
+// 3. Make sure no one can go to DM without having a DM
+// 4. Add a way to delete a group
+// 5. Add a way to delete a DM
+
+// Maybe
+
+// Improve logout functionality
 
 require('dotenv').config();
 const uuid = require('uuid');

@@ -97,6 +97,7 @@ async function onCreate (){
     // and were not going to work with all groups in the local storage, just the designated one
 
     try{
+        create_button.disabled = true;
         const formData = new FormData();
         formData.append("profilePic", imageData);
         formData.append('group', JSON.stringify(group));
@@ -133,6 +134,8 @@ async function onCreate (){
         }
     }catch (e){
         alert(e);
+    } finally {
+        create_button.disabled = false;
     }
 
 }
@@ -159,6 +162,7 @@ async function onJoin (){
     let joinedGroup = null;
 
     try{
+        join_button.disabled = true;
         let response = await fetch(`/api/findGroup/${groupId}`, {
             method : "Get",
             headers : {
@@ -175,6 +179,8 @@ async function onJoin (){
     }catch (e){
         alert(e);
         return;
+    } finally {
+        join_button.disabled = false;
     }
 
     // alert user if group doesnt exit

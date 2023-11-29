@@ -6,6 +6,7 @@ let usersDiv = document.querySelector("#allUsers");
 let chatTitle = document.querySelector("#chatTitle-private");
 let chatFrame = document.querySelector("#chatFrame-private");
 let inputField = document.querySelector("#chatbox-private");
+let sumbitButton = document.querySelector("#userSubmitButton-private");
 let dm = null;
 
 async function initialize (){
@@ -139,15 +140,14 @@ async function onSubmit () {
         time : Math.floor(Date.now() / 1000),
         text : message,
     }
-
     // save the chats
     dm.messages.push(chat);
     //const id = dm.id
     updateDM(dm).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
 }
 
-inputField.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        onSubmit();
-    }
-})
+const debounceOnEnter = debounce(onEnter, 500);
+const debounceOnClick = debounce(onSubmit, 500);
+
+inputField.addEventListener("keypress", debounceOnEnter);
+sumbitButton.addEventListener("click", debounceOnClick);

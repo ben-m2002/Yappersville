@@ -142,7 +142,10 @@ async function setUpPage (){
     await setUpOpenDMs()
 }
 
+
+
 async function onSubmit () {
+
     let message = userTextBox.value;
 
     if (message === "" || checkForWhiteSpace(message)) {
@@ -152,6 +155,10 @@ async function onSubmit () {
 
     let userObject = JSON.parse(user);
     let author = userObject.name;
+
+    // we will set debounce here
+
+
 
     // parse a message here because we can replace message with joke
 
@@ -176,10 +183,17 @@ async function onSubmit () {
     userTextBox.value = "";
 }
 
-userTextBox.addEventListener("keypress", function (event) {
+function onEnter (event) {
     if (event.key === "Enter") {
         onSubmit();
     }
-})
+}
+
+const debounceOnEnter = debounce(onEnter, 500);
+const debounceOnClick = debounce(onSubmit, 500);
+
+userTextBox.addEventListener("keypress", debounceOnEnter);
+userTextSubmit.addEventListener("click", debounceOnClick);
+
 
 

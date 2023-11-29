@@ -27,6 +27,20 @@ function createTextBox (chatFrame, author, message){
     chatFrame.scrollTop = chatFrame.scrollHeight;
 }
 
+function debounce (func, wait){
+    let timeout;
+
+    return function executedFunction (){
+        const later = () => {
+            clearTimeout(timeout);
+            func();
+        }
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    }
+}
+
 function hashString(str) {
     let shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(str);
@@ -183,3 +197,4 @@ async function logout (){
 }
 
 logoutButton.addEventListener("click", logout);
+logout.style.color = "red";
