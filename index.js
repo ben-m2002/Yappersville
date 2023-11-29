@@ -1,11 +1,10 @@
 //-k "/Users/benmaduabuchi/Documents/cs260.pem" -h "yappersville.click" -s "startup"
 
 // Todo
-// 1  Add disabling to buttons
-// 2  Add way to make group ID
-// 3. Make sure no one can go to DM without having a DM
-// 4. Add a way to delete a group
-// 5. Add a way to delete a DM
+// 1  Add way to find group ID
+// 2. Make sure no one can go to DM without having a DM
+// 3. Add a way to delete a group
+// 4. Add a way to delete a DM
 
 // Maybe
 
@@ -35,6 +34,14 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(cookieParser(config.COOKIES_SECRET_KEY));
+
+// websocket stuff
+
+const http = require('http')
+const server = http.createServer(app);
+const io = require('socket.io')(server);
+const IO_SOCKET = require("./Modules/Socket")(io);
+IO_SOCKET(io);
 
 // aws stuff
 
@@ -245,7 +252,7 @@ function setAuthCookie (res, token) {
     });
 }
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Listening on port ${port}`);
 })
 

@@ -7,11 +7,13 @@ const userTextSubmit = document.querySelector("#userSubmitButton");
 const chatFrame = document.querySelector("#chatFrame");
 const allGroups = JSON.parse(localStorage.getItem("groups"));
 const DMSDiv = document.querySelector("#allDMS");
+const socket = io();
 
 async function initialize(){
     // optimization tip in the future, get all the users and hit the server and get all possible dms that can come from this server
     await updateCurrentGroup();
     await setUpPage();
+    socket.emit('join', currentGroup.id)
 }
 
 initialize();
@@ -177,7 +179,7 @@ async function onSubmit () {
     // updates
     currentGroup.allChats.push(chat);
     updateGroup(currentGroup).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
-    await setUpChats();
+    socket.emit('message', {room: currentGroup.id, text: chat, author : userObject.name})
 
     // clear the text box
     userTextBox.value = "";
@@ -188,6 +190,10 @@ function onEnter (event) {
         onSubmit();
     }
 }
+
+socket.on("chat message", (msg) => {
+    createTextBox(chatFrame, msg.author, msg.text);
+});
 
 const debounceOnEnter = debounce(onEnter, 500);
 const debounceOnClick = debounce(onSubmit, 500);
