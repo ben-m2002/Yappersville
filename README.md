@@ -103,4 +103,12 @@ Do you and your buddies want a place to talk after school, and don't know where 
 - stores user credentials in database
 - user is not able to use groups without authentication
 
+## Websocket Deliverable
+### This deliverable delivers websocket messaging for people in chat groups
+- Backend listens for a websocket connection
+- Front end makes the connection
+- There is chat data send over streams
+- You can see the chats from the websocket
+
+
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
