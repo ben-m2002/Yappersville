@@ -104,7 +104,11 @@ async function parseMessage (message){
 }
 
 function displayMembers (members, usersDiv){
+    while (usersDiv.firstChild){
+        usersDiv.removeChild(usersDiv.firstChild)
+    }
     for (let member of members){
+
         let userDiv = document.createElement("div");
         userDiv.className = "userBox";
 

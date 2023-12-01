@@ -13,7 +13,7 @@ async function initialize(){
     // optimization tip in the future, get all the users and hit the server and get all possible dms that can come from this server
     await updateCurrentGroup();
     await setUpPage();
-    socket.emit('join', currentGroup.id)
+    socket.emit('join', currentGroup.id);
 }
 
 initialize();
@@ -192,7 +192,13 @@ function onEnter (event) {
 }
 
 socket.on("chat message", (msg) => {
+    console.log(msg)
     createTextBox(chatFrame, msg.author, msg.text);
+});
+
+socket.on("update users", (members) => {
+    console.log("receive user update")
+    displayMembers(members, usersDiv);
 });
 
 //const debounceOnEnter = debounce(onEnter(), 500);
@@ -200,6 +206,5 @@ const debounceOnClick = debounce(onSubmit, 500);
 
 //userTextBox.addEventListener("keypress", debounceOnEnter);
 userTextSubmit.addEventListener("click", debounceOnClick);
-
 
 

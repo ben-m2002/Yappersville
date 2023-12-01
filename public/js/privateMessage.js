@@ -8,10 +8,12 @@ let chatFrame = document.querySelector("#chatFrame-private");
 let inputField = document.querySelector("#chatbox-private");
 let sumbitButton = document.querySelector("#userSubmitButton-private");
 let dm = null;
+const socket = io();
 
 async function initialize (){
     await updateCurrentDM();
-    setUpPage();
+    await setUpPage();
+    socket.emit('join', dm.id);
 }
 
 initialize()
@@ -142,9 +144,15 @@ async function onSubmit () {
     }
     // save the chats
     dm.messages.push(chat);
-    //const id = dm.id
     updateDM(dm).then(r => (r.status === 200) ? console.log("success") : console.log("error"));
+    socket.emit('chat message', {room: currentGroup.id, author : chat.author, text : chat.text});
+    // clear
+    userTextBox.value = "";
 }
+
+socket.on("chat message", (msg) => {
+    createTextBox(chatFrame, msg.author, msg.text);
+});
 
 //const debounceOnEnter = debounce(onEnter, 500);
 const debounceOnClick = debounce(onSubmit, 500);

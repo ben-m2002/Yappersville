@@ -1,6 +1,12 @@
 //-k "/Users/benmaduabuchi/Documents/cs260.pem" -h "yappersville.click" -s "startup"
 
 // Todo
+// 1. Make sure the users list gets updated
+// 2. Fix the enter button
+// 2. Disable the buttons without fading the color
+// 4. Change the color of DM user list
+
+
 // 1  Add way to find group ID
 // 2. Make sure no one can go to DM without having a DM
 // 3. Add a way to delete a group
@@ -23,7 +29,8 @@ let db = null;
 
 async function establishConnections (){
     client = await database.getClient();
-    db = database.getDB(client);
+    db = await database.getDB(client);
+    IO_SOCKET(io, db, config.COOKIES_SECRET_KEY);
 }
 
 
@@ -41,7 +48,6 @@ const http = require('http')
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 let IO_SOCKET = require("./Modules/Socket.js");
-IO_SOCKET(io, db);
 
 // aws stuff
 
@@ -188,11 +194,21 @@ apiRouter.get("/userGroups", async (req, res) => {
 
 apiRouter.post("/updateGroup", async (req, res) => {
     const group = req.body;
-    const groupCollection = database.findGroup(db,group.id)
+    const groupCollection = await database.findGroup(db,group.id)
     if (groupCollection === null){
         res.status(400).send("Group not found");
         return;
     }
+
+    // only call emit socket when users in group changes:
+    const newUsers = group.members
+    const oldUsers = groupCollection.members
+
+    if (newUsers.length !== oldUsers.length){
+        console.log("emitting update users")
+       io.to(group.id).emit("update users", group.members);
+    }
+
     await database.updateGroup(db, group);
     res.status(200).send("Success");
 });

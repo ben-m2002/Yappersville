@@ -1,8 +1,11 @@
 const cookie = require('cookie');
+const cookieParser = require('cookie-parser');
 let userRooms = {}; // map a user to all their rooms
 
 
-module.exports = function (io, db) {
+// instead of having a leave all we can just make to when you join you automatically leave the other ones
+
+module.exports = function (io, db, cookieSecret) {
     io.on('connection', function (socket) {
         console.log('a user connected');
 
@@ -10,10 +13,10 @@ module.exports = function (io, db) {
             if (socket.handshake.headers && socket.handshake.headers.cookie) {
                 const cookies = cookie.parse(socket.handshake.headers.cookie);
                 const token = cookies["auth"];
-                const users = db.get("users");
+                const users = db.collection("users");
                 // were going to map a user to a room, we dont need to map to a socker since all users already have a socket
                 if (users){
-                    const user = users.findOne({token: token}).value();
+                    const user = users.findOne({token: token})
                     if (user) {
                         if (userRooms[user.id]) {
                             userRooms[user.id].push(room);
@@ -31,9 +34,9 @@ module.exports = function (io, db) {
              if (socket.handshake.headers && socket.handshake.headers.cookie) {
                 const cookies = cookie.parse(socket.handshake.headers.cookie);
                 const token = cookies["auth"];
-                const users = db.get("users");
+                const users = db.collection("users");
                 if (users){
-                    const user = users.findOne({token: token}).value();
+                    const user = users.findOne({token: token})
                     if (user) {
                         if (userRooms[user.id]) {
                             userRooms[user.id] = userRooms[user.id].filter(r => r !== room);
@@ -45,18 +48,19 @@ module.exports = function (io, db) {
             socket.leave(room);
         });
 
-        socket.on("leave all", function() {
+        socket.on("leave all", async function() {
             if (socket.handshake.headers && socket.handshake.headers.cookie) {
                 const cookies = cookie.parse(socket.handshake.headers.cookie);
-                const token = cookies["auth"];
-                const users = db.get("users");
-                if (users){
-                    const user = users.findOne({token: token}).value();
+                const token  = cookieParser.signedCookie(cookies["auth"], cookieSecret);
+                const users = db.collection("users");
+                if (users && token){
+                    const user = await users.findOne({token: token});
                     if (user) {
                         if (userRooms[user.id]) {
                             for (let room of userRooms[user.id]){
                                 socket.leave(room);
                             }
+                            userRooms[user.id] = [];
                         }
                     }
                 }
@@ -73,9 +77,9 @@ module.exports = function (io, db) {
              if (socket.handshake.headers && socket.handshake.headers.cookie) {
                 const cookies = cookie.parse(socket.handshake.headers.cookie);
                 const token = cookies["auth"];
-                const users = db.get("users");
+                const users = db.collection("users");
                 if (users){
-                    const user = users.findOne({token: token}).value();
+                    const user = users.findOne({token: token})
                     if (user) {
                         if (userRooms[user.id]) {
                             userRooms[user.id] = [];
@@ -86,4 +90,5 @@ module.exports = function (io, db) {
             console.log('user disconnected');
         });
     });
+
 }
