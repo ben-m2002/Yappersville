@@ -30,10 +30,10 @@ function createTextBox (chatFrame, author, message){
 function debounce (func, wait){
     let timeout;
 
-    return function executedFunction (){
+    return function executedFunction (...args){
         const later = () => {
             clearTimeout(timeout);
-            func();
+            func(...args);
         }
 
         clearTimeout(timeout);
@@ -103,14 +103,21 @@ async function parseMessage (message){
     }
 }
 
-function displayMembers (members, usersDiv){
-    while (usersDiv.firstChild){
-        usersDiv.removeChild(usersDiv.firstChild)
+function displayMembers (members, usersDiv, color){
+
+    let children = usersDiv.children;
+
+    for (let i = 0; i < children.length; i++){
+        if (children[i].className === "userBox"){
+            usersDiv.removeChild(children[i]);
+        }
     }
+
     for (let member of members){
 
         let userDiv = document.createElement("div");
         userDiv.className = "userBox";
+        userDiv.style.backgroundColor = color;
 
         let button = document.createElement("button");
         button.className = "userBoxButton";

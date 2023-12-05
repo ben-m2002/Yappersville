@@ -58,7 +58,7 @@ function setUpUsers (currentGroup){
     // get the users
     const members = currentGroup.members;
     // add the users to the page
-    displayMembers(members, usersDiv);
+    displayMembers(members, usersDiv, "#BBDEFB");
 }
 
 async function setUpChats (){
@@ -120,7 +120,7 @@ async function setUpOpenDMs (){
                     }
                 }
             }
-            displayMembers(members, DMSDiv);
+            displayMembers(members, DMSDiv, "#ea8585");
         }
         else{
            console.log("User has no open dms")
@@ -185,11 +185,6 @@ async function onSubmit () {
     userTextBox.value = "";
 }
 
-function onEnter (event) {
-    if (event.key === "Enter") {
-        onSubmit();
-    }
-}
 
 socket.on("chat message", (msg) => {
     console.log(msg)
@@ -201,10 +196,16 @@ socket.on("update users", (members) => {
     displayMembers(members, usersDiv);
 });
 
-//const debounceOnEnter = debounce(onEnter(), 500);
+function onEnter (event) {
+    if (event.key === "Enter") {
+        onSubmit();
+    }
+}
+
+const debounceOnEnter = debounce(onEnter, 500);
 const debounceOnClick = debounce(onSubmit, 500);
 
-//userTextBox.addEventListener("keypress", debounceOnEnter);
+userTextBox.addEventListener("keypress", debounceOnEnter);
 userTextSubmit.addEventListener("click", debounceOnClick);
 
 

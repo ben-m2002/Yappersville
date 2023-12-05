@@ -57,11 +57,14 @@ main .users {
 }
 
 main .userBox{
-    background-color: #BBDEFB;
     color: black;
     text-align: center;
     text-justify: distribute-center-last;
     margin-bottom: 1em;
+    border: 1px solid black; /* Gives a button-like border */
+    border-radius: 5px; /* Rounded corners like a button */
+    cursor: default; /* Keeps the cursor default instead of pointer */
+  /* Add any other styles to mimic a button */
 }
 
 main .userBoxButton {
@@ -98,9 +101,10 @@ main .chat {
     flex-grow: 1;
 }
 
+
 main .textfield{
     border: none;
-    color : white;
+    color : #ffffff;
 }
 
 main .textfield-name{
@@ -146,6 +150,20 @@ main .textfield-text{
 
 #inputSection button:active {
     transform: scale(1);   /* Reset button size when pressed */
+}
+
+.roomCode {
+    background-color: white;
+    color: black;
+    margin-top: 1em;
+    width: 4em;
+    height: 2em;
+    text-align: center;
+    align-content: center;
+    font-size: medium;
+    margin-left: 2em;
+    border: 1px solid black; /* Gives a button-like border */
+    border-radius: 5px; /* Rounded corners like a button */
 }
 
 main .DMS {

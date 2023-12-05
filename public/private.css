@@ -62,7 +62,13 @@ main .userBox{
     text-align: center;
     text-justify: distribute-center-last;
     margin-bottom: 1em;
+    border: 1px solid black; /* Gives a button-like border */
+    border-radius: 5px; /* Rounded corners like a button */
+    cursor: default; /* Keeps the cursor default instead of pointer */
+  /* Add any other styles to mimic a button */
 }
+
+
 
 main .userBoxButton {
     background: transparent;

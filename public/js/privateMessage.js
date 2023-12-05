@@ -6,7 +6,7 @@ let usersDiv = document.querySelector("#allUsers");
 let chatTitle = document.querySelector("#chatTitle-private");
 let chatFrame = document.querySelector("#chatFrame-private");
 let inputField = document.querySelector("#chatbox-private");
-let sumbitButton = document.querySelector("#userSubmitButton-private");
+let submitButton = document.querySelector("#userSubmitButton-private");
 let dm = null;
 const socket = io();
 
@@ -64,11 +64,10 @@ function setUpUsers (){
         }
         let userDiv = document.createElement("div");
         userDiv.className = "userBox";
-        let button = document.createElement("button");
-        button.className = "userBoxButton";
-        button.textContent = member;
-        button.disabled = true;
-        userDiv.appendChild(button);
+        userDiv.style.backgroundColor = "#BBDEFB"
+        let textNode = document.createTextNode(member);
+        textNode.textContent = member;
+        userDiv.appendChild(textNode);
         usersDiv.appendChild(userDiv);
     }
 }
@@ -158,4 +157,4 @@ socket.on("chat message", (msg) => {
 const debounceOnClick = debounce(onSubmit, 500);
 
 //inputField.addEventListener("keypress", debounceOnEnter);
-sumbitButton.addEventListener("click", debounceOnClick);
+submitButton.addEventListener("click", debounceOnClick);

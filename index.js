@@ -1,10 +1,6 @@
 //-k "/Users/benmaduabuchi/Documents/cs260.pem" -h "yappersville.click" -s "startup"
 
 // Todo
-// 1. Make sure the users list gets updated
-// 2. Fix the enter button
-// 2. Disable the buttons without fading the color
-// 4. Change the color of DM user list
 
 
 // 1  Add way to find group ID
