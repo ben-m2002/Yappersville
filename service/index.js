@@ -4,7 +4,7 @@
 
 
 // 1  Add way to find group ID
-// 2. Make sure no one can go to DM without having a DM
+// 2. Make sure no one can go to DM without having a D
 // 3. Add a way to delete a group
 // 4. Add a way to delete a DM
 
@@ -34,7 +34,7 @@ const port = process.argv > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 
-app.use(express.static('public'));
+app.use(express.static('../public'));
 
 app.use(cookieParser(config.COOKIES_SECRET_KEY));
 

@@ -5,10 +5,10 @@ Do you and your buddies want a place to talk after school, and don't know where 
 
 ## Design
 
-![Design Image 1](public/images/YLogin-1.jpg)
-![Design Image 2](public/images/YGroup-2.jpg)
-![Design Image 3](public/images/YChatPage-3.jpg)
-![Design Image 4](public/images/YPrivate-4.jpg)
+![Design Image 1](images/YLogin-1.jpg)
+![Design Image 2](images/YGroup-2.jpg)
+![Design Image 3](images/YChatPage-3.jpg)
+![Design Image 4](images/YPrivate-4.jpg)
 
 ## Key features
 
@@ -78,37 +78,5 @@ Do you and your buddies want a place to talk after school, and don't know where 
 - I have java script support for databases via group creation. Also chats for groups save
 - I have java script web socket support that will be used in the chat page
 - The application has the full java script interactions.
-
-## Service Deliverable
-
-### This deliverable will show how I added services to my project
-- Node.js/Express HTTP service - done!
-- Static middleware for frontend - done!
-- Calls to third party endpoints - Entering /joke in the chat will hit a dad joke API
-- Backend service endpoints - Every piece of data is backed up in back end, users, groups, dms
-- Frontend calls service endpoints - Front end gets and sends data to the back end via api calls
-
-## Database Deliverable
-
-### This deliverable will show how I added a database to my project
-- Implemented Mongo DB Atlas
-- Provided back end endpoints for creating, finding, and editing users, groups, and dms
-- Those endpoints then store data in our mongodb database
-
-## Login Deliverable
-
-### This deliverable delivers secure login and authentication for users
-- Supports regesitering new users
-- Supports authentication for new users
-- stores user credentials in database
-- user is not able to use groups without authentication
-
-## Websocket Deliverable
-### This deliverable delivers websocket messaging for people in chat groups
-- Backend listens for a websocket connection
-- Front end makes the connection
-- There is chat data send over streams
-- You can see the chats from the websocket
-
 
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
