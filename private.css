@@ -1,0 +1,172 @@
+body {
+    font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* full viewport height */
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+header {
+  flex: 0 0 80px;
+  padding: 20px 0;
+}
+
+nav.navbar {
+  justify-content: start;
+}
+
+nav.navbar ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+    margin-right: 1em;
+    margin-top: 0.5em;
+}
+
+main {
+    flex: 1; /* to take the remaining space in viewport after header and footer */
+    display: flex;
+    padding: 1em; /* some spacing around the main content */
+    box-sizing: border-box;
+    margin-left: 12em;
+}
+
+main > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* Users list */
+main .users {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 15%;
+    height: 70vh;
+    padding: 1em;
+    overflow-y: auto; /* in case there are many users */
+    margin-top: 3.3em;
+    margin-left: -10em;
+    background-color: #2C3539;
+}
+
+main .userBox{
+    background-color: #BBDEFB;
+    color: black;
+    text-align: center;
+    text-justify: distribute-center-last;
+    margin-bottom: 1em;
+    border: 1px solid black; /* Gives a button-like border */
+    border-radius: 5px; /* Rounded corners like a button */
+    cursor: default; /* Keeps the cursor default instead of pointer */
+  /* Add any other styles to mimic a button */
+}
+
+
+
+main .userBoxButton {
+    background: transparent;
+    border: none;
+}
+
+main .chat {
+    width: 110vh;
+    height: 70vh;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: #2C3539;
+    margin-left: 1em;
+    margin-top: 3.4em;
+}
+
+
+
+#chatFrame-private {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    overflow-y: auto; /* making chat scrollable */
+    padding: 0.5em;
+    margin-bottom: 1em; /* space between chat and typing area */
+    background-color: #25292b;
+}
+
+.filler {
+    flex-grow: 1;
+}
+
+main .textfield{
+    border: none;
+    color : white;
+}
+
+main .textfield-name{
+    font-size: 10px;
+}
+
+main .textfield-text{
+    font-size: 12px;
+    margin-top: -1em;
+}
+
+#inputSection {
+    display: flex;
+    justify-content: space-between;
+    align-items : flex-end;
+    width: 75%;
+    margin-top: 2em;
+}
+
+
+#inputSection input {
+    flex: 1;
+    margin-right: 2em; /* some spacing between input and buttons */
+}
+
+
+#inputSection button {
+    margin-right: 1em;
+    padding: 6px 10px;   /* Reduced padding for smaller button size */
+    font-size: 0.9em;    /* Adjust the font size as necessary */
+    background-color: #2B4F81;  /* Deep slate blue background */
+    color: #EAEAEA;       /* Soft white text */
+    border: none;         /* No border */
+    border-radius: 5px;   /* Rounded corners */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
+    cursor: pointer;      /* Hand cursor on hover */
+}
+
+#inputSection button:hover {
+    background-color: #1B3F8B; /* Slightly darker blue on hover */
+    transform: scale(1.05);    /* Slightly enlarge button on hover */
+}
+
+#inputSection button:active {
+    transform: scale(1);   /* Reset button size when pressed */
+}
+
+
+footer {
+  display: flex;
+  gap: 10px; /* Adjust this value as needed */
+  flex: 0 0 30px;
+  padding: 0px 40px;
+  max-height: 30px;
+}
+
+footer #logout {
+    text-align: start;
+    color: white;
+    background: transparent;
+    border : none;
+    margin-bottom: 10px;
+}
