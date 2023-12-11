@@ -3,8 +3,8 @@ import styles from "./main.module.css";
 
 export function Login(){
     return(
-            <main>
-                <h1>Yappersville</h1>
+            <main className={styles["mainSection"]}>
+                <h1 className={styles["title"]}>Yappersville</h1>
                 <div className= {styles["main-bucket"]} >
 
                     <p>Login to chat with your buddies</p>

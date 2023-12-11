@@ -1,38 +1,13 @@
-body {
-    display: flex;
-    flex-direction: column;
-    min-width: 375px;
-    height: 90vh; /* make sure the body covers the full viewport height */
-     font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
-}
 
-main {
+
+.mainContainer {
     display: flex;
     flex-direction: column;
     justify-content: center; /* centers children vertically */
     align-items: center;     /* centers children horizontally */
     flex: 1;                 /* ensures main takes up all available space */
     padding: 20px;           /* keep the existing padding */
-}
-
-header {
-  flex: 0 0 80px;
-  padding: 20px 0;
-}
-
-nav.navbar {
-  justify-content: start;
-}
-
-nav.navbar ul {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-    margin-right: 1em;
-    margin-top: 0.5em;
+    margin-top: 13em;
 }
 
 /* Group grid styles */

@@ -1,53 +1,24 @@
-body {
-    font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* full viewport height */
-    box-sizing: border-box;
-    overflow: auto;
-}
 
-header {
-  flex: 0 0 80px;
-  padding: 20px 0;
-}
-
-nav.navbar {
-  justify-content: start;
-}
-
-nav.navbar ul {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-    margin-right: 1em;
-    margin-top: 0.5em;
-}
-
-main {
+.mainContent {
     flex: 1; /* to take the remaining space in viewport after header and footer */
     display: flex;
     padding: 1em; /* some spacing around the main content */
     box-sizing: border-box;
-    margin-left: 12em;
+    margin-left: 16em;
+    margin-top: 3em;
 }
 
-main > div {
+.mainContent > div {
     display: inline-block;
     vertical-align: top;
 }
 
 /* Users list */
-main .users {
+.mainContent .users {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 15%;
+    width: 17%;
     height: 70vh;
     padding: 1em;
     overflow-y: auto; /* in case there are many users */
@@ -56,8 +27,7 @@ main .users {
     background-color: #2C3539;
 }
 
-main .userBox{
-    background-color: #BBDEFB;
+.mainContent .userBox{
     color: black;
     text-align: center;
     text-justify: distribute-center-last;
@@ -68,14 +38,12 @@ main .userBox{
   /* Add any other styles to mimic a button */
 }
 
-
-
-main .userBoxButton {
+.mainContent .userBoxButton {
     background: transparent;
     border: none;
 }
 
-main .chat {
+.mainContent .chat {
     width: 110vh;
     height: 70vh;
     padding: 1em;
@@ -89,7 +57,7 @@ main .chat {
 
 
 
-#chatFrame-private {
+#chatFrame {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -104,16 +72,17 @@ main .chat {
     flex-grow: 1;
 }
 
-main .textfield{
+
+.mainContent .textfield{
     border: none;
-    color : white;
+    color : #ffffff;
 }
 
-main .textfield-name{
+.mainContent .textfield-name{
     font-size: 10px;
 }
 
-main .textfield-text{
+.mainContent .textfield-text{
     font-size: 12px;
     margin-top: -1em;
 }
@@ -154,19 +123,30 @@ main .textfield-text{
     transform: scale(1);   /* Reset button size when pressed */
 }
 
-
-footer {
-  display: flex;
-  gap: 10px; /* Adjust this value as needed */
-  flex: 0 0 30px;
-  padding: 0px 40px;
-  max-height: 30px;
+.roomCode {
+    background-color: white;
+    color: black;
+    margin-top: 1em;
+    width: 4em;
+    height: 2em;
+    text-align: center;
+    align-content: center;
+    font-size: medium;
+    margin-left: 2em;
+    border: 1px solid black; /* Gives a button-like border */
+    border-radius: 5px; /* Rounded corners like a button */
 }
 
-footer #logout {
-    text-align: start;
-    color: white;
-    background: transparent;
-    border : none;
-    margin-bottom: 10px;
+.mainContent .DMS {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 17%;
+    height: 70vh;
+    padding: 1em;
+    overflow-y: auto; /* in case there are many users */
+    margin-top: 3.3em;
+    margin-left: 1em;
+    background-color: #2C3539;
 }
+

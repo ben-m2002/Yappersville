@@ -3,7 +3,8 @@ body {
     font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
     flex-direction: column;
     min-width: 375px;
-    height: 90vh; /* make sure the body covers the full viewport height */
+    height: 80vh; /* make sure the body covers the full viewport height */
+    overflow-y: auto;
 }
 
 header {
@@ -17,7 +18,6 @@ footer {
     padding: 10px 0;
     max-height: 30px;
 }
-
 
 nav.navbar {
     justify-content: start;
