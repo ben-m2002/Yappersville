@@ -103,7 +103,7 @@ async function onLogin (){
 
 async function onLogout (){
     localStorage.clear();
-    window.location.href = "index.html";
+    window.location.href = "main.html";
 }
 
 getMe()

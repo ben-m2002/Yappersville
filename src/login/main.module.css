@@ -1,16 +1,3 @@
-body {
-    display: flex;
-    font-family: Arial, sans-serif; /* just for simplicity; you can use any font */
-    flex-direction: column;
-    min-width: 375px;
-    height: 90vh; /* make sure the body covers the full viewport height */
-}
-
-header {
-  flex: 0 0 80px;
-  padding: 10px 0;
-}
-
 footer {
     display: flex;
   flex: 0 0 30px;
@@ -58,18 +45,3 @@ h1 {
     margin: 7em;
 }
 
-footer {
-  display: flex;
-  gap: 10px; /* Adjust this value as needed */
-  flex: 0 0 30px;
-  padding: 0px 40px;
-  max-height: 30px;
-}
-
-footer #logout {
-    text-align: start;
-    color: white;
-    background: transparent;
-    border : none;
-    margin-bottom: 10px;
-}

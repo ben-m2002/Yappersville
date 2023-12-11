@@ -3,4 +3,7 @@ node_modules/
 service/.env
 service/package-lock.json
 service/package.json
+package.json
+package-lock.json
+vite.config.js
 

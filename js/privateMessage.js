@@ -25,7 +25,7 @@ async function updateCurrentDM (){
     // check if there is a user
     if (userObject == null){
         alert("Go login or register");
-        window.location.href = "index.html";
+        window.location.href = "main.html";
         return
     }
 

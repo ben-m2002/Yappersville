@@ -213,7 +213,7 @@ async function populateGroups (){
     let userObject = JSON.parse(localStorage.getItem("user"));
     if (userObject == null){
         alert("Go login or register");
-        window.location.href = "index.html";
+        window.location.href = "main.html";
         return
     }
     let allGroups = null

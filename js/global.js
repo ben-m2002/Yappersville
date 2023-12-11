@@ -199,7 +199,7 @@ async function logout (){
         });
         if (response.status === 200){
             localStorage.clear()
-            window.location.href = "index.html";
+            window.location.href = "main.html";
         }
     }
     catch (e){

@@ -34,7 +34,7 @@ const port = process.argv > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 
-app.use(express.static('../public'));
+app.use(express.static('public'));
 
 app.use(cookieParser(config.COOKIES_SECRET_KEY));
 
