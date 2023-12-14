@@ -1,0 +1,13 @@
+.textfield{
+    border: none;
+    color : white;
+}
+
+.textfield-name{
+    font-size: 10px;
+}
+
+.textfield-text{
+    font-size: 12px;
+    margin-top: -1em;
+}

@@ -1,0 +1,20 @@
+.userBox{
+    background-color: #BBDEFB;
+    color: black;
+    text-align: center;
+    text-justify: distribute-center-last;
+    margin-bottom: 1em;
+}
+
+.userBoxDM{
+    background-color: #de6767;
+    color: #fffbfb;
+    text-align: center;
+    text-justify: distribute-center-last;
+    margin-bottom: 1em;
+}
+
+.userBoxButton {
+    background: transparent;
+    border: none;
+}

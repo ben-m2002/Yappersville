@@ -100,8 +100,8 @@ export function Login(){
         catch (e){
             alert("Error connecting to the server");
         } finally {
-            setCanPressRegister(false);
-            setCanPressLogin(false);
+            setCanPressRegister(true);
+            setCanPressLogin(true);
         }
     }
 
