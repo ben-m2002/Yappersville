@@ -4,9 +4,10 @@
 
 
 // 1  Add way to find group ID
-// 2. Make sure no one can go to DM without having a D
+// 2. Make sure no one can go to DM without having a DMID
 // 3. Add a way to delete a group
 // 4. Add a way to delete a DM
+// 5. In the chat page, make it to where the user list is different than the dm list
 
 // Maybe
 

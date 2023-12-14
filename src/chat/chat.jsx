@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./chatpage.module.css"
 import io from "socket.io-client";
-import {Member} from "./Member";
+import {Member} from "../Member";
 import {Message} from "../Message"
 import jsSHA from "jssha";
 import {useNavigate} from "react-router-dom";
@@ -9,7 +9,7 @@ import {checkForWhiteSpace, parseMessage, updateGroup} from "../hFunctions";
 
 export function Chat (){
     const [userObject, setUserObject] = React.useState(JSON.parse(localStorage.getItem("user")));
-    let [currentGroup, setCurrentGroup] = React.useState({});
+    let [currentGroup, setCurrentGroup] = React.useState({}); // this is a DM object
     const [chats, setChats] = React.useState([]);
     const [message, setMessage] = React.useState("");
     const [roomCode, setRoomCode] = React.useState("");
@@ -29,13 +29,18 @@ export function Chat (){
 
         socket.current.on("chat message", (msg) => {
             console.log(msg)
-           // createTextBox(chatFrame, msg.author, msg.text); FIX THIS LATER
+            setChats(chats => [...chats, <Message name={msg.author} text={msg.text} />]);
         });
 
         socket.current.on("update users", (members) => {
             console.log("receive user update")
-            // displayMembers(members, usersDiv); FIX THIS IN A BIT
+            let membersArray = []
+            for (let member of members){
+                membersArray.push(<Member type = "chat" name = {member} />)
+            }
+            setMembers(membersArray)
         });
+
         initializeGroup();
     }, [navigate])
 
@@ -49,14 +54,13 @@ export function Chat (){
         let membersArray = [];
         let chatsArray = []
         let openDMSArray = [];
-
-        if (Object.keys(currentGroup).length === 0){
+        socket.current.emit('join', currentGroup.id);
+        if (Object.keys(currentGroup).length === 0){ // stops this useEffect until we get our currentGroup
             return;
         }
         for (let member of currentGroup.members){
             membersArray.push(<Member type = "chat" name = {member} />)
         }
-
         for (let chat of currentGroup.allChats){
             chatsArray.push(<Message name ={chat.author} text ={chat.text} />)
         }
@@ -100,8 +104,7 @@ export function Chat (){
 
     const initializeGroup = async () => {
         let user = localStorage.getItem("user");
-        const userObject = JSON.parse(user);
-        setUserObject(userObject)
+        setUserObject(JSON.parse(user));
         // check if user exists
         if (userObject == null){
             alert("Go login or register");
@@ -129,7 +132,6 @@ export function Chat (){
             alert(e);
         }
     }
-
 
     const sendMessageOnEnter = async (event) => {
         event.preventDefault();

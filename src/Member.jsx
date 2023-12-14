@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom";
 import styles from "./member.module.css"
-import {hashString, updateUser} from "../hFunctions";
+import {hashString, updateUser} from "./hFunctions";
 
 export function Member(props) {
     const [userObject, setUserObject] = React.useState(JSON.parse(localStorage.getItem("user")));
