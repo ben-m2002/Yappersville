@@ -79,4 +79,13 @@ Do you and your buddies want a place to talk after school, and don't know where 
 - I have java script web socket support that will be used in the chat page
 - The application has the full java script interactions.
 
+## React Deliverable
+
+### This deliverable will show my knowledge of React
+-Bundled using WebPack and Babel as generated from using create-react-app
+-Created multiple react components, for login, groups, chat, private, members, messages
+-Routed html requests properly
+-Used react states for proper react components
+
+
 Link to notes : https://github.com/ben-m2002/startup/blob/main/notes.md
